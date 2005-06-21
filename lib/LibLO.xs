@@ -2,7 +2,7 @@
 
 	liblo perl bindings
 
-	Copyright 2005 Nicholas Humfrey <njh@aelius.com>
+	Copyright 2005 Nicholas J. Humfrey <njh@aelius.com>
 
 */
 

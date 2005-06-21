@@ -4,7 +4,7 @@ package LibLO::Client;
 #
 # liblo: perl bindings
 #
-# Copyright 2005 Nicholas Humfrey <njh@aelius.com>
+# Copyright 2005 Nicholas J. Humfrey <njh@aelius.com>
 #
 
 use Carp;
@@ -112,7 +112,7 @@ LibLO::Client
 
 =head1 AUTHOR
 
-Nicholas Humfrey, njh@aelius.com
+Nicholas J. Humfrey, njh@aelius.com
 
 =head1 COPYRIGHT AND LICENSE
 
