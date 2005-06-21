@@ -1,4 +1,4 @@
-package liblo::message;
+package LibLO::Message;
 
 ################
 #
@@ -7,15 +7,11 @@ package liblo::message;
 # Copyright 2005 Nicholas Humfrey <njh@aelius.com>
 #
 
-use strict;
 use XSLoader;
 use Carp;
+use strict;
 
-use vars qw/$VERSION/;
-
-$VERSION="0.01";
-
-XSLoader::load('liblo::api', $VERSION);
+XSLoader::load('LibLO::XSUB');
 
 
 
@@ -53,77 +49,77 @@ sub new {
 sub pretty_print {
 	my $self=shift;
 
-	liblo::api::lo_message_pp( $self->{message} );
+	LibLO::api::lo_message_pp( $self->{message} );
 }
 
 sub add_char {
 	my $self=shift;
 	my ($char) = @_;
-	liblo::api::lo_message_add_char( $self->{message}, $char );
+	LibLO::api::lo_message_add_char( $self->{message}, $char );
 }
 
 
 sub add_nil {
 	my $self=shift;
-	liblo::api::lo_message_add_nil( $self->{message} );
+	LibLO::api::lo_message_add_nil( $self->{message} );
 }
 
 sub add_true {
 	my $self=shift;
-	liblo::api::lo_message_add_true( $self->{message} );
+	LibLO::api::lo_message_add_true( $self->{message} );
 }
 
 sub add_false {
 	my $self=shift;
-	liblo::api::lo_message_add_false( $self->{message} );
+	LibLO::api::lo_message_add_false( $self->{message} );
 }
 
 sub add_infinitum {
 	my $self=shift;
-	liblo::api::lo_message_add_infinitum( $self->{message} );
+	LibLO::api::lo_message_add_infinitum( $self->{message} );
 }
 
 sub add_double {
 	my $self=shift;
 	my ($double) = @_;
-	liblo::api::lo_message_add_double( $self->{message}, $double );
+	LibLO::api::lo_message_add_double( $self->{message}, $double );
 }
 
 sub add_float {
 	my $self=shift;
 	my ($float) = @_;
-	liblo::api::lo_message_add_float( $self->{message}, $float );
+	LibLO::api::lo_message_add_float( $self->{message}, $float );
 }
 
 sub add_float {
 	my $self=shift;
 	my ($float) = @_;
-	liblo::api::lo_message_add_float( $self->{message}, $float );
+	LibLO::api::lo_message_add_float( $self->{message}, $float );
 }
 
 sub add_int32 {
 	my $self=shift;
 	my ($int) = @_;
-	liblo::api::lo_message_add_int32( $self->{message}, $int );
+	LibLO::api::lo_message_add_int32( $self->{message}, $int );
 }
 
 sub add_string {
 	my $self=shift;
 	my ($string) = @_;
-	liblo::api::lo_message_add_string( $self->{message}, $string );
+	LibLO::api::lo_message_add_string( $self->{message}, $string );
 }
 
 sub add_symbol {
 	my $self=shift;
 	my ($symbol) = @_;
-	liblo::api::lo_message_add_symbol( $self->{message}, $symbol );
+	LibLO::api::lo_message_add_symbol( $self->{message}, $symbol );
 }
 
 sub DESTROY {
     my $self=shift;
     
     if (defined $self->{message}) {
-    	liblo::api::lo_message_free( $self->{message} );
+    	LibLO::api::lo_message_free( $self->{message} );
     	undef $self->message;
     }
 }
@@ -137,19 +133,19 @@ __END__
 
 =head1 NAME
 
-liblo::blob
+LibLO::blob
 
 =head1 SYNOPSIS
 
-  use liblo::blob;
+  use LibLO::blob;
 
-  my $blob = new liblo::message( );
+  my $blob = new LibLO::message( );
   
 
 
 =head1 DESCRIPTION
 
-liblo::blob
+LibLO::blob
 
 
 =head1 AUTHOR

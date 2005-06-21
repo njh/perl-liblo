@@ -1,6 +1,6 @@
 /*
 
-	liblo perl client bindings
+	liblo perl bindings
 
 	Copyright 2005 Nicholas Humfrey <njh@aelius.com>
 
@@ -14,7 +14,7 @@
 
 
 
-MODULE = liblo::api	PACKAGE = liblo::api
+MODULE = LibLO	PACKAGE = LibLO
 
 
 ##
@@ -169,13 +169,6 @@ lo_message_pp(msg)
   CODE:
 	lo_message_pp( msg );
 	
-void
-lo_message_add_blob(msg, blob)
-	lo_message   msg
-	lo_blob		 blob
-  CODE:
-  	lo_message_add_blob( msg, blob );
-
 void
 lo_message_add_char(msg, ch)
 	lo_message   msg

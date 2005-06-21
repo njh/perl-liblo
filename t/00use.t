@@ -3,11 +3,11 @@ use strict;
 use Test;
 
 
-# use a BEGIN block so we print our plan before liblo::client is loaded
+# use a BEGIN block so we print our plan before LibLO::Client is loaded
 BEGIN { plan tests => 1 }
 
-# load liblo::client
-use liblo::client;
+# load LibLO::Client
+use LibLO::Client;
 
 
 # Module has loaded sucessfully 

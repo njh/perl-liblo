@@ -33,7 +33,7 @@ chomp( $CFLAGS, $LDFLAGS );
 my $build = Module::Build->new
 (
 	dist_name => 'liblo-perl',
-	dist_version => $liblo_version,
+	dist_version => '0.01',
 	license => 'gpl',
 	build_requires => {
 		'Module::Build' => '0.20'
