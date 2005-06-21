@@ -33,15 +33,13 @@ chomp( $CFLAGS, $LDFLAGS );
 my $build = Module::Build->new
 (
 	dist_name => 'liblo-perl',
-	dist_version => '0.01',
+	dist_version_from => 'lib/LibLO.pm',
 	license => 'gpl',
 	build_requires => {
 		'Module::Build' => '0.20'
 	},
 	requires => {
 		'Test' => '1.00',
-		'Getopt::Std' => 0,
-		'Pod::Usage' => 0,
 	},
 	
 	extra_compiler_flags => $CFLAGS,

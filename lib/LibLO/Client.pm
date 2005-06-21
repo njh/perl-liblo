@@ -7,13 +7,10 @@ package LibLO::Client;
 # Copyright 2005 Nicholas Humfrey <njh@aelius.com>
 #
 
-use XSLoader;
 use Carp;
+use LibLO;
 use LibLO::Message;
 use strict;
-
-
-XSLoader::load('LibLO');
 
 
 
@@ -112,19 +109,6 @@ LibLO::Client - Perl client bindings for liblo high-level API
 =head1 DESCRIPTION
 
 LibLO::Client
-
-=head1 TODO
-
-
-=over
-=item Add libosc::server class
-=item Add libosc::blob class
-=item Add libosc::bundle class
-=item Add support for int64
-=item Add support for midi
-=item Add support for timetags
-=back
-
 
 =head1 AUTHOR
 

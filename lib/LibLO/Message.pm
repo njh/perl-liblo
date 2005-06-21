@@ -7,11 +7,9 @@ package LibLO::Message;
 # Copyright 2005 Nicholas Humfrey <njh@aelius.com>
 #
 
-use XSLoader;
 use Carp;
+use LibLO;
 use strict;
-
-XSLoader::load('LibLO');
 
 
 
@@ -131,9 +129,9 @@ LibLO::blob
 
 =head1 SYNOPSIS
 
-  use LibLO::blob;
+  use LibLO::Message;
 
-  my $blob = new LibLO::message( );
+  my $msg = new LibLO::Message( );
   
 
 
