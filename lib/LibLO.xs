@@ -169,6 +169,17 @@ lo_message_pp(msg)
   CODE:
 	lo_message_pp( msg );
 	
+size_t
+lo_message_length(msg,path)
+	lo_message msg
+	const char *path
+  CODE:
+	RETVAL = lo_message_length(msg,path);
+	
+  OUTPUT:
+	RETVAL
+  	
+	
 void
 lo_message_add_char(msg, ch)
 	lo_message   msg

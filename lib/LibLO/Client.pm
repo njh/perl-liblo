@@ -62,14 +62,14 @@ sub send {
 	my $self=shift;
 	my ($path, $type, @params) = @_;
 	my $message = new LibLO::Message( $type, @params );
-	LibLO::lo_send_message( $self->{address}, $path, $message->{message} );
+	return LibLO::lo_send_message( $self->{address}, $path, $message->{message} );
 }
 
 
 sub send_message {
 	my $self=shift;
 	my ($path, $message) = @_;
-	LibLO::lo_send_message( $self->{address}, $path, $message->{message} );
+	return LibLO::lo_send_message( $self->{address}, $path, $message->{message} );
 }
 
 
@@ -78,7 +78,7 @@ sub DESTROY {
     
     if (defined $self->{address}) {
     	LibLO::lo_address_free( $self->{address} );
-    	undef $self->address;
+    	undef $self->{address};
     }
 }
 

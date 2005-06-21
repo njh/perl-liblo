@@ -37,11 +37,11 @@ LibLO
 
 =over
 
-=item Add LibLO::Server class
+=item Create LibLO::Server class
 
-=item Add LibLO::Blob class
+=item Create LibLO::Blob class
 
-=item Add LibLO::Bundle class
+=item Create LibLO::Bundle class
 
 =item Add support for int64
 

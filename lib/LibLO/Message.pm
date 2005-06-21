@@ -16,30 +16,31 @@ use strict;
 sub new {
     my $class = shift;
     my $self = { message => LibLO::lo_message_new() };
-    my @types = split(//, shift);
     
     # Bless the hash into an object
     bless $self, $class;
     
     
-    # Type and parameters supplied ?
-	foreach my $type (@types) {
-	
-		if    ($type eq 'i') {  $self->add_int32( shift ) }
-		elsif ($type eq 'f') {  $self->add_float( shift ) }
-		elsif ($type eq 's') {  $self->add_string( shift ) }
-		elsif ($type eq 'd') {  $self->add_double( shift ) }
-		elsif ($type eq 'S') {  $self->add_symbol( shift ) }
-		elsif ($type eq 'c') {  $self->add_char( shift ) }
-		elsif ($type eq 'T') {  $self->add_true() }
-		elsif ($type eq 'F') {  $self->add_false() }
-		elsif ($type eq 'N') {  $self->add_nil() }
-		elsif ($type eq 'I') {  $self->add_infinitum() }
-		else {
-			croak("Unsupported character '$type' in format.");
+    # Types and parameters supplied ?
+	my $types = shift;
+	if (defined $types) {
+		foreach my $type (split(//, $types)) {
+		
+			if    ($type eq 'i') {  $self->add_int32( shift ) }
+			elsif ($type eq 'f') {  $self->add_float( shift ) }
+			elsif ($type eq 's') {  $self->add_string( shift ) }
+			elsif ($type eq 'd') {  $self->add_double( shift ) }
+			elsif ($type eq 'S') {  $self->add_symbol( shift ) }
+			elsif ($type eq 'c') {  $self->add_char( shift ) }
+			elsif ($type eq 'T') {  $self->add_true() }
+			elsif ($type eq 'F') {  $self->add_false() }
+			elsif ($type eq 'N') {  $self->add_nil() }
+			elsif ($type eq 'I') {  $self->add_infinitum() }
+			else {
+				croak("Unsupported character '$type' in type string.");
+			}
 		}
-	
-	}
+    }
     
    	return $self;
 }
@@ -107,12 +108,21 @@ sub add_symbol {
 	LibLO::lo_message_add_symbol( $self->{message}, $symbol );
 }
 
+sub length {
+	my $self=shift;
+	my ($path) = @_;
+	croak('Usage: $msg->length( $path )') unless (defined $path);
+	LibLO::lo_message_length( $self->{message}, $path );
+}
+	
+	
+
 sub DESTROY {
     my $self=shift;
     
     if (defined $self->{message}) {
     	LibLO::lo_message_free( $self->{message} );
-    	undef $self->message;
+    	undef $self->{message};
     }
 }
 
