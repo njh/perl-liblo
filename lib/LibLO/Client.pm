@@ -13,7 +13,7 @@ use LibLO::Message;
 use strict;
 
 
-XSLoader::load('LibLO::XSUB');
+XSLoader::load('LibLO');
 
 
 
@@ -29,12 +29,12 @@ sub new {
     if (scalar(@_)==1) {
     	my ($url) = @_;
 
-		$self->{address} = LibLO::XSUB::lo_address_new_from_url( $url );
+		$self->{address} = LibLO::lo_address_new_from_url( $url );
     	
     } elsif (scalar(@_)==2) {
     	my ($host, $port) = @_;
 
-		$self->{address} = LibLO::XSUB::lo_address_new( $host, $port );
+		$self->{address} = LibLO::lo_address_new( $host, $port );
     	
     } else {
     	croak( "invalid number of parameters" );
@@ -52,27 +52,27 @@ sub new {
 sub errno {
 	my $self=shift;
 
-	return LibLO::XSUB::lo_address_errno( $self->{address} );
+	return LibLO::lo_address_errno( $self->{address} );
 }
 
 sub errstr {
 	my $self=shift;
 
-	return LibLO::XSUB::lo_address_errstr( $self->{address} );
+	return LibLO::lo_address_errstr( $self->{address} );
 }
 
 sub send {
 	my $self=shift;
 	my ($path, $type, @params) = @_;
-	my $message = new liblo::message( $type, @params );
-	LibLO::XSUB::lo_send_message( $self->{address}, $path, $message->{message} );
+	my $message = new LibLO::Message( $type, @params );
+	LibLO::lo_send_message( $self->{address}, $path, $message->{message} );
 }
 
 
 sub send_message {
 	my $self=shift;
 	my ($path, $message) = @_;
-	LibLO::XSUB::lo_send_message( $self->{address}, $path, $message->{message} );
+	LibLO::lo_send_message( $self->{address}, $path, $message->{message} );
 }
 
 
@@ -80,7 +80,7 @@ sub DESTROY {
     my $self=shift;
     
     if (defined $self->{address}) {
-    	LibLO::XSUB::lo_address_free( $self->{address} );
+    	LibLO::lo_address_free( $self->{address} );
     	undef $self->address;
     }
 }

@@ -11,13 +11,13 @@ use XSLoader;
 use Carp;
 use strict;
 
-XSLoader::load('LibLO::XSUB');
+XSLoader::load('LibLO');
 
 
 
 sub new {
     my $class = shift;
-    my $self = { message => liblo::api::lo_message_new() };
+    my $self = { message => LibLO::lo_message_new() };
     my @types = split(//, shift);
     
     # Bless the hash into an object
@@ -49,77 +49,77 @@ sub new {
 sub pretty_print {
 	my $self=shift;
 
-	LibLO::api::lo_message_pp( $self->{message} );
+	LibLO::lo_message_pp( $self->{message} );
 }
 
 sub add_char {
 	my $self=shift;
 	my ($char) = @_;
-	LibLO::api::lo_message_add_char( $self->{message}, $char );
+	LibLO::lo_message_add_char( $self->{message}, $char );
 }
 
 
 sub add_nil {
 	my $self=shift;
-	LibLO::api::lo_message_add_nil( $self->{message} );
+	LibLO::lo_message_add_nil( $self->{message} );
 }
 
 sub add_true {
 	my $self=shift;
-	LibLO::api::lo_message_add_true( $self->{message} );
+	LibLO::lo_message_add_true( $self->{message} );
 }
 
 sub add_false {
 	my $self=shift;
-	LibLO::api::lo_message_add_false( $self->{message} );
+	LibLO::lo_message_add_false( $self->{message} );
 }
 
 sub add_infinitum {
 	my $self=shift;
-	LibLO::api::lo_message_add_infinitum( $self->{message} );
+	LibLO::lo_message_add_infinitum( $self->{message} );
 }
 
 sub add_double {
 	my $self=shift;
 	my ($double) = @_;
-	LibLO::api::lo_message_add_double( $self->{message}, $double );
+	LibLO::lo_message_add_double( $self->{message}, $double );
 }
 
 sub add_float {
 	my $self=shift;
 	my ($float) = @_;
-	LibLO::api::lo_message_add_float( $self->{message}, $float );
+	LibLO::lo_message_add_float( $self->{message}, $float );
 }
 
 sub add_float {
 	my $self=shift;
 	my ($float) = @_;
-	LibLO::api::lo_message_add_float( $self->{message}, $float );
+	LibLO::lo_message_add_float( $self->{message}, $float );
 }
 
 sub add_int32 {
 	my $self=shift;
 	my ($int) = @_;
-	LibLO::api::lo_message_add_int32( $self->{message}, $int );
+	LibLO::lo_message_add_int32( $self->{message}, $int );
 }
 
 sub add_string {
 	my $self=shift;
 	my ($string) = @_;
-	LibLO::api::lo_message_add_string( $self->{message}, $string );
+	LibLO::lo_message_add_string( $self->{message}, $string );
 }
 
 sub add_symbol {
 	my $self=shift;
 	my ($symbol) = @_;
-	LibLO::api::lo_message_add_symbol( $self->{message}, $symbol );
+	LibLO::lo_message_add_symbol( $self->{message}, $symbol );
 }
 
 sub DESTROY {
     my $self=shift;
     
     if (defined $self->{message}) {
-    	LibLO::api::lo_message_free( $self->{message} );
+    	LibLO::lo_message_free( $self->{message} );
     	undef $self->message;
     }
 }
