@@ -91,12 +91,6 @@ sub add_float {
 	LibLO::lo_message_add_float( $self->{message}, $float );
 }
 
-sub add_float {
-	my $self=shift;
-	my ($float) = @_;
-	LibLO::lo_message_add_float( $self->{message}, $float );
-}
-
 sub add_int32 {
 	my $self=shift;
 	my ($int) = @_;
