@@ -19,7 +19,7 @@ if ($liblo_version !~ /^\d+\.\d+$/) {
 	print $liblo_version;
 	exit -1;
 } else {
-	print "Using liblo version $liblo_version.\n";
+	print "Found liblo library version $liblo_version.\n";
 }
 
 # Get CFLAGS and LDFLAGS
