@@ -1,9 +1,10 @@
-liblo perl bindings
-===================
+liblo perl binding
+==================
 
-Perl binding for the liblo high level API.
+Perl binding for the liblo library.
 
-See liblo::client documentation for details.
+Only Client support is currently implemented.
+See LibLO::Client for details.
 
 
 
