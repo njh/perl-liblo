@@ -26,14 +26,15 @@ __END__
 
 =head1 NAME
 
-LibLO - Perl bindings for liblo library
+LibLO - Perl interface for liblo Lightweight OSC library
 
 =head1 DESCRIPTION
 
-LibLO
+liblo-perl is a Perl Interface for the liblo Lightweight OSC library.
+
+See L<LibLO::Client> for details of how to use this module in a client.
 
 =head1 TODO
-
 
 =over
 
@@ -51,6 +52,13 @@ LibLO
 
 =back
 
+=head1 SEE ALSO
+
+L<LibLO::Client>
+
+L<LibLO::Message>
+
+L<http://plugin.org.uk/liblo/>
 
 =head1 AUTHOR
 
