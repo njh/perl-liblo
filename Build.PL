@@ -32,6 +32,7 @@ chomp( $CFLAGS, $LDFLAGS );
 # Create the Build script
 my $build = Module::Build->new
 (
+	module_name => 'LibLO',
 	dist_name => 'liblo-perl',
 	dist_version_from => 'lib/LibLO.pm',
 	license => 'gpl',
