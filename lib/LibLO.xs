@@ -16,7 +16,6 @@
 
 MODULE = LibLO	PACKAGE = LibLO
 
-
 ##
 ## Return the error code for the last error
 ## associated with an address
@@ -26,7 +25,6 @@ lo_address_errno( address )
 	lo_address	address
   CODE:
 	RETVAL = lo_address_errno( address );
-	
   OUTPUT:
 	RETVAL
 
@@ -40,7 +38,6 @@ lo_address_errstr( address )
 	lo_address address
   CODE:
 	RETVAL = lo_address_errstr( address );
-	
   OUTPUT:
 	RETVAL
 
@@ -54,10 +51,8 @@ lo_address_new( host, port )
 	const char *port
   CODE:
 	RETVAL = lo_address_new( host, port );
-	
   OUTPUT:
 	RETVAL
-
 
 
 ##
@@ -68,7 +63,6 @@ lo_address_new_from_url ( url )
 	const char *url
   CODE:
 	RETVAL = lo_address_new_from_url( url );
-	
   OUTPUT:
 	RETVAL
 
@@ -92,15 +86,11 @@ lo_blob_new( sv )
   PREINIT:
 	STRLEN  size = 0;
 	char *  data = NULL;
-
   CODE:
   	data = SvPV( sv, size );
-
 	RETVAL = lo_blob_new( size, data );
-	
   OUTPUT:
 	RETVAL
-
 
 
 ##
@@ -111,7 +101,6 @@ lo_blob_datasize ( blob )
 	lo_blob	blob
   CODE:
 	RETVAL = lo_blob_datasize( blob );
-	
   OUTPUT:
 	RETVAL
 
@@ -126,7 +115,6 @@ lo_blob_free ( blob )
 	lo_blob_free( blob );
 
 
-
 ##
 ## Send an OSC message (now)
 ##
@@ -136,14 +124,9 @@ lo_send_message( address, path, message )
 	const char*  path
 	lo_message   message
   CODE:
-
 	RETVAL = lo_send_message( address, path, message );
-	
   OUTPUT:
 	RETVAL
-
-
-
 
 
 ##
@@ -153,7 +136,6 @@ lo_message
 lo_message_new()
   CODE:
 	RETVAL = lo_message_new();
-	
   OUTPUT:
 	RETVAL
 
@@ -178,8 +160,7 @@ lo_message_length(msg,path)
 	
   OUTPUT:
 	RETVAL
-  	
-	
+
 void
 lo_message_add_char(msg, ch)
 	lo_message   msg

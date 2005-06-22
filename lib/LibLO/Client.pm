@@ -95,20 +95,98 @@ LibLO::Client - Perl client bindings for liblo high-level API
 
 =head1 SYNOPSIS
 
-  use liblo::client;
+  use LibLO::Client;
 
   my $lo = new LibLO::Client( 'osc.udp://localhost:4444/' );
   
-  # or 
-  
   my $lo = new LibLO::Client( 'localhost', 4444 );
 
-  $lo->send( "/foo/bar", "ff", 0.1f, 23.0f );
+  $lo->send( "/foo/bar", "Tsfi", "hello", 0.1f, 23 );
+
+  my $message = new LibLO::Message();
+  $message->add_string( "Hello World" );
+  $lo->send_message( "/foo/bar", $message );
 
 
 =head1 DESCRIPTION
 
-LibLO::Client
+LibLO::Client provides methods for sending messages to a 
+server process. 
+
+=head2 METHODS
+
+=over 4
+
+=item B<new( url )>
+
+Create a Client object from an OSC URL.
+
+=item B<new( host, port )>
+
+Create a Client object from a specified host address and port.
+
+=item B<send( path, types, ... )>
+
+Send an OSC message without having to create a LibLO::Message object.
+
+C<path> the OSC path the message will be delivered to.
+
+C<types> The types of the data items in the message.
+
+
+=over 4
+
+=item B<i>  32 bit signed integer.
+
+=item B<f>  32 bit IEEE-754 float.
+
+=item B<s>  A string
+
+=item B<d>  64 bit IEEE-754 double.
+
+=item B<S>  A symbol - used in systems which distinguish strings and symbols.
+
+=item B<c>  A single 8bit charater
+
+=item B<T>  Symbol representing the value True.
+
+=item B<F>  Symbol representing the value False.
+
+=item B<N>  Symbol representing the value Nil.
+
+=item B<I>  Symbol representing the value Infinitum.
+
+=back
+
+C<...> The data values to be transmitted.
+The types of the arguments passed here must agree with the 
+types specified in the type parameter.
+
+Returns -1 if there was an error.
+
+=item B<send_message( path, message )>
+
+Send a C<LibLO::Message> object to the specified path.
+
+Returns -1 if there was an error.
+
+=item B<errno()>
+
+Return the error number for the last error.
+
+=item B<errstr()>
+
+Return the error string for the last error.
+
+=back
+
+=head1 SEE ALSO
+
+L<LibLO>
+
+L<LibLO::Message>
+
+L<http://plugin.org.uk/liblo/>
 
 =head1 AUTHOR
 
