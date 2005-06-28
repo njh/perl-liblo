@@ -34,7 +34,6 @@ my $build = Module::Build->new
 (
 	module_name => 'LibLO',
 	dist_name => 'liblo-perl',
-	dist_version_from => 'lib/LibLO.pm',
 	license => 'gpl',
 	build_requires => {
 		'Module::Build' => '0.20'

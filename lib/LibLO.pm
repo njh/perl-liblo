@@ -13,7 +13,7 @@ use strict;
 
 use vars qw/$VERSION/;
 
-$VERSION="0.01";
+$VERSION="0.02";
 
 XSLoader::load('LibLO', $VERSION);
 
@@ -62,7 +62,7 @@ L<http://plugin.org.uk/liblo/>
 
 =head1 AUTHOR
 
-Nicholas J. Humfrey, njh@aelius.com
+Nicholas J. Humfrey <njh@aelius.com>
 
 =head1 COPYRIGHT AND LICENSE
 
