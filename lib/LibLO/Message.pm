@@ -130,7 +130,7 @@ __END__
 
 =head1 NAME
 
-LibLO::blob
+LibLO::Message
 
 =head1 SYNOPSIS
 
