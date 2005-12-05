@@ -8,8 +8,8 @@ package Net::LibLO::Server;
 #
 
 use Carp;
-use LibLO;
-use LibLO::Message;
+use Net::LibLO;
+use Net::LibLO::Message;
 use strict;
 
 
@@ -19,7 +19,7 @@ sub new {
     my ($port) = @_;
         
     # Create new server instance
-    my $server = LibLO::lo_server_new( $port );
+    my $server = Net::LibLO::lo_server_new( $port );
     if (!defined $server) {
     	warn "Error creating lo_server";
     	return undef;
@@ -40,13 +40,13 @@ sub new {
 sub get_port {
     my $self=shift;
 
-	return LibLO::lo_server_get_port( $self->{server} );
+	return Net::LibLO::lo_server_get_port( $self->{server} );
 }
 
 sub get_url {
     my $self=shift;
 
-	return LibLO::lo_server_get_url( $self->{server} );
+	return Net::LibLO::lo_server_get_url( $self->{server} );
 }
 
 sub add_method {
@@ -79,7 +79,7 @@ sub DESTROY {
     my $self=shift;
     
     if (defined $self->{server}) {
-    	LibLO::lo_server_free( $self->{server} );
+    	Net::LibLO::lo_server_free( $self->{server} );
     	undef $self->{server};
     }
 }
@@ -93,26 +93,26 @@ __END__
 
 =head1 NAME
 
-LibLO::Client - Perl client bindings for liblo high-level API
+Net::LibLO::Client - Perl client bindings for liblo high-level API
 
 =head1 SYNOPSIS
 
-  use LibLO::Client;
+  use Net::LibLO::Client;
 
-  my $lo = new LibLO::Client( 'osc.udp://localhost:4444/' );
+  my $lo = new Net::LibLO::Client( 'osc.udp://localhost:4444/' );
   
-  my $lo = new LibLO::Client( 'localhost', 4444 );
+  my $lo = new Net::LibLO::Client( 'localhost', 4444 );
 
   $lo->send( "/foo/bar", "Tsfi", "hello", 0.1f, 23 );
 
-  my $message = new LibLO::Message();
+  my $message = new Net::LibLO::Message();
   $message->add_string( "Hello World" );
   $lo->send_message( "/foo/bar", $message );
 
 
 =head1 DESCRIPTION
 
-LibLO::Client provides methods for sending messages to a 
+Net::LibLO::Client provides methods for sending messages to a 
 server process. 
 
 =head2 METHODS
@@ -129,7 +129,7 @@ Create a Client object from a specified host address and port.
 
 =item B<send( path, types, ... )>
 
-Send an OSC message without having to create a LibLO::Message object.
+Send an OSC message without having to create a Net::LibLO::Message object.
 
 C<path> the OSC path the message will be delivered to.
 
@@ -168,7 +168,7 @@ Returns -1 if there was an error.
 
 =item B<send_message( path, message )>
 
-Send a C<LibLO::Message> object to the specified path.
+Send a C<Net::LibLO::Message> object to the specified path.
 
 Returns -1 if there was an error.
 
@@ -184,9 +184,9 @@ Return the error string for the last error.
 
 =head1 SEE ALSO
 
-L<LibLO>
+L<Net::LibLO>
 
-L<LibLO::Message>
+L<Net::LibLO::Message>
 
 L<http://plugin.org.uk/liblo/>
 

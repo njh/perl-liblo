@@ -8,8 +8,8 @@ package Net::LibLO::Client;
 #
 
 use Carp;
-use LibLO;
-use LibLO::Message;
+use Net::LibLO;
+use Net::LibLO::Message;
 use strict;
 
 
@@ -26,12 +26,12 @@ sub new {
     if (scalar(@_)==1) {
     	my ($url) = @_;
 
-		$self->{address} = LibLO::lo_address_new_from_url( $url );
+		$self->{address} = Net::LibLO::lo_address_new_from_url( $url );
     	
     } elsif (scalar(@_)==2) {
     	my ($host, $port) = @_;
 
-		$self->{address} = LibLO::lo_address_new( $host, $port );
+		$self->{address} = Net::LibLO::lo_address_new( $host, $port );
     	
     } else {
     	croak( "invalid number of parameters" );
@@ -49,27 +49,27 @@ sub new {
 sub errno {
 	my $self=shift;
 
-	return LibLO::lo_address_errno( $self->{address} );
+	return Net::LibLO::lo_address_errno( $self->{address} );
 }
 
 sub errstr {
 	my $self=shift;
 
-	return LibLO::lo_address_errstr( $self->{address} );
+	return Net::LibLO::lo_address_errstr( $self->{address} );
 }
 
 sub send {
 	my $self=shift;
 	my ($path, $type, @params) = @_;
-	my $message = new LibLO::Message( $type, @params );
-	return LibLO::lo_send_message( $self->{address}, $path, $message->{message} );
+	my $message = new Net::LibLO::Message( $type, @params );
+	return Net::LibLO::lo_send_message( $self->{address}, $path, $message->{message} );
 }
 
 
 sub send_message {
 	my $self=shift;
 	my ($path, $message) = @_;
-	return LibLO::lo_send_message( $self->{address}, $path, $message->{message} );
+	return Net::LibLO::lo_send_message( $self->{address}, $path, $message->{message} );
 }
 
 
@@ -77,7 +77,7 @@ sub DESTROY {
     my $self=shift;
     
     if (defined $self->{address}) {
-    	LibLO::lo_address_free( $self->{address} );
+    	Net::LibLO::lo_address_free( $self->{address} );
     	undef $self->{address};
     }
 }
@@ -91,26 +91,26 @@ __END__
 
 =head1 NAME
 
-LibLO::Client - Perl client bindings for liblo high-level API
+Net::LibLO::Client - Perl client bindings for liblo high-level API
 
 =head1 SYNOPSIS
 
-  use LibLO::Client;
+  use Net::LibLO::Client;
 
-  my $lo = new LibLO::Client( 'osc.udp://localhost:4444/' );
+  my $lo = new Net::LibLO::Client( 'osc.udp://localhost:4444/' );
   
-  my $lo = new LibLO::Client( 'localhost', 4444 );
+  my $lo = new Net::LibLO::Client( 'localhost', 4444 );
 
   $lo->send( "/foo/bar", "Tsfi", "hello", 0.1f, 23 );
 
-  my $message = new LibLO::Message();
+  my $message = new Net::LibLO::Message();
   $message->add_string( "Hello World" );
   $lo->send_message( "/foo/bar", $message );
 
 
 =head1 DESCRIPTION
 
-LibLO::Client provides methods for sending messages to a 
+Net::LibLO::Client provides methods for sending messages to a 
 server process. 
 
 =head2 METHODS
@@ -127,7 +127,7 @@ Create a Client object from a specified host address and port.
 
 =item B<send( path, types, ... )>
 
-Send an OSC message without having to create a LibLO::Message object.
+Send an OSC message without having to create a Net::LibLO::Message object.
 
 C<path> the OSC path the message will be delivered to.
 
@@ -166,7 +166,7 @@ Returns -1 if there was an error.
 
 =item B<send_message( path, message )>
 
-Send a C<LibLO::Message> object to the specified path.
+Send a C<Net::LibLO::Message> object to the specified path.
 
 Returns -1 if there was an error.
 
@@ -182,9 +182,9 @@ Return the error string for the last error.
 
 =head1 SEE ALSO
 
-L<LibLO>
+L<Net::LibLO>
 
-L<LibLO::Message>
+L<Net::LibLO::Message>
 
 L<http://plugin.org.uk/liblo/>
 

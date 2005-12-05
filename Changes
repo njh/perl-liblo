@@ -1,5 +1,11 @@
 Revision history for liblo perl bindings
 
+0.03  Mon Dec  5 00:35:33 GMT 2005
+	Changed namespace to Net::LibLO to make CPAN happy
+
+0.02  Tue Jun 30 16:43:56 BST 2005
+	Unreleased
+	Added LibLO::Server
 
 0.01  Tue Jun 21 12:18:04 BST 2005
 	First release

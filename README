@@ -4,7 +4,7 @@ liblo perl binding
 Perl binding for the liblo library.
 
 Only Client support is currently implemented.
-See LibLO::Client for details.
+See Net::LibLO::Client for details.
 
 
 

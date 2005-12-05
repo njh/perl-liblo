@@ -1,10 +1,10 @@
 Build.PL
 Changes
-lib/LibLO/Client.pm
-lib/LibLO/Message.pm
-lib/LibLO.pm
-lib/LibLO.xs
-lib/typemap
+lib/Net/LibLO/Client.pm
+lib/Net/LibLO/Message.pm
+lib/Net/LibLO.pm
+lib/Net/LibLO.xs
+lib/Net/typemap
 MANIFEST
 META.yml
 README

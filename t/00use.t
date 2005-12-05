@@ -7,16 +7,16 @@ use Test;
 BEGIN { plan tests => 3 }
 
 
-# Check LibLO loads ok
-use LibLO;
+# Check Net::LibLO loads ok
+use Net::LibLO;
 ok(1);
 
-# Check LibLO::Message loads ok
-use LibLO::Message;
+# Check Net::LibLO::Message loads ok
+use Net::LibLO::Message;
 ok(1);
 
-# Check LibLO::Client loads ok
-use LibLO::Client;
+# Check Net::LibLO::Client loads ok
+use Net::LibLO::Client;
 ok(1);
 
 

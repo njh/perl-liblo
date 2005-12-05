@@ -8,14 +8,14 @@ package Net::LibLO::Message;
 #
 
 use Carp;
-use LibLO;
+use Net::LibLO;
 use strict;
 
 
 
 sub new {
     my $class = shift;
-    my $self = { message => LibLO::lo_message_new() };
+    my $self = { message => Net::LibLO::lo_message_new() };
     
     # Bless the hash into an object
     bless $self, $class;
@@ -48,75 +48,75 @@ sub new {
 sub add_int32 {
 	my $self=shift;
 	my ($int) = @_;
-	LibLO::lo_message_add_int32( $self->{message}, $int );
+	Net::LibLO::lo_message_add_int32( $self->{message}, $int );
 }
 
 sub add_float {
 	my $self=shift;
 	my ($float) = @_;
-	LibLO::lo_message_add_float( $self->{message}, $float );
+	Net::LibLO::lo_message_add_float( $self->{message}, $float );
 }
 
 sub add_string {
 	my $self=shift;
 	my ($string) = @_;
-	LibLO::lo_message_add_string( $self->{message}, $string );
+	Net::LibLO::lo_message_add_string( $self->{message}, $string );
 }
 
 sub add_double {
 	my $self=shift;
 	my ($double) = @_;
-	LibLO::lo_message_add_double( $self->{message}, $double );
+	Net::LibLO::lo_message_add_double( $self->{message}, $double );
 }
 
 sub add_symbol {
 	my $self=shift;
 	my ($symbol) = @_;
-	LibLO::lo_message_add_symbol( $self->{message}, $symbol );
+	Net::LibLO::lo_message_add_symbol( $self->{message}, $symbol );
 }
 
 sub add_char {
 	my $self=shift;
 	my ($char) = @_;
-	LibLO::lo_message_add_char( $self->{message}, $char );
+	Net::LibLO::lo_message_add_char( $self->{message}, $char );
 }
 
 sub add_true {
 	my $self=shift;
-	LibLO::lo_message_add_true( $self->{message} );
+	Net::LibLO::lo_message_add_true( $self->{message} );
 }
 
 sub add_false {
 	my $self=shift;
-	LibLO::lo_message_add_false( $self->{message} );
+	Net::LibLO::lo_message_add_false( $self->{message} );
 }
 
 sub add_nil {
 	my $self=shift;
-	LibLO::lo_message_add_nil( $self->{message} );
+	Net::LibLO::lo_message_add_nil( $self->{message} );
 }
 sub add_infinitum {
 	my $self=shift;
-	LibLO::lo_message_add_infinitum( $self->{message} );
+	Net::LibLO::lo_message_add_infinitum( $self->{message} );
 }
 
 sub length {
 	my $self=shift;
 	my ($path) = @_;
 	croak('Usage: $msg->length( $path )') unless (defined $path);
-	LibLO::lo_message_length( $self->{message}, $path );
+	Net::LibLO::lo_message_length( $self->{message}, $path );
 }
 
 sub pretty_print {
 	my $self=shift;
-	LibLO::lo_message_pp( $self->{message} );
+	Net::LibLO::lo_message_pp( $self->{message} );
 }
 
 sub DESTROY {
     my $self=shift;
     
     if (defined $self->{message}) {
-    	LibLO::lo_message_free( $self->{message} );
+    	Net::LibLO::lo_message_free( $self->{message} );
     	undef $self->{message};
     }
 }
@@ -130,19 +130,19 @@ __END__
 
 =head1 NAME
 
-LibLO::Message
+Net::LibLO::Message
 
 =head1 SYNOPSIS
 
-  use LibLO::Message;
+  use Net::LibLO::Message;
 
-  my $msg = new LibLO::Message( );
+  my $msg = new Net::LibLO::Message( );
   $msg->add_string( "Hello World!" );
   $msg->add_int32( 41287 );
 
 =head1 DESCRIPTION
 
-LibLO::Message is a perl class which represents a single OSC message.
+Net::LibLO::Message is a perl class which represents a single OSC message.
 
 =over 4
 

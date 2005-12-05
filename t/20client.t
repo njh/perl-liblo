@@ -3,14 +3,14 @@ use strict;
 use Test;
 
 
-# use a BEGIN block so we print our plan before LibLO::Client is loaded
+# use a BEGIN block so we print our plan before Net::LibLO::Client is loaded
 BEGIN { plan tests => 3 }
 
-# load LibLO::Client
-use LibLO::Client;
+# load Net::LibLO::Client
+use Net::LibLO::Client;
 
 # Create a message object
-my $lo = new LibLO::Client( 'localhost', 4542);
+my $lo = new Net::LibLO::Client( 'localhost', 4542);
 ok( $lo );
 
 # Send a message

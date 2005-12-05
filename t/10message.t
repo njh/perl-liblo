@@ -3,14 +3,14 @@ use strict;
 use Test;
 
 
-# use a BEGIN block so we print our plan before LibLO::Message is loaded
+# use a BEGIN block so we print our plan before Net::LibLO::Message is loaded
 BEGIN { plan tests => 13 }
 
-# load LibLO::Message
-use LibLO::Message;
+# load Net::LibLO::Message
+use Net::LibLO::Message;
 
 # Create a message object
-my $mesg = new LibLO::Message();
+my $mesg = new Net::LibLO::Message();
 ok( $mesg );
 
 
