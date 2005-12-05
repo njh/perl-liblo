@@ -1,4 +1,4 @@
-package LibLO;
+package Net::LibLO;
 
 ################
 #
@@ -13,9 +13,9 @@ use strict;
 
 use vars qw/$VERSION/;
 
-$VERSION="0.02";
+$VERSION="0.03";
 
-XSLoader::load('LibLO', $VERSION);
+XSLoader::load('Net::LibLO', $VERSION);
 
 
 1;

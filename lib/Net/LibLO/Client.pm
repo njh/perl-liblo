@@ -1,4 +1,4 @@
-package LibLO::Client;
+package Net::LibLO::Client;
 
 ################
 #

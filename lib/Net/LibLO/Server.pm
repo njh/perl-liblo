@@ -1,4 +1,4 @@
-package LibLO::Server;
+package Net::LibLO::Server;
 
 ################
 #

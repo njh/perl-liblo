@@ -1,4 +1,4 @@
-package LibLO::Message;
+package Net::LibLO::Message;
 
 ################
 #

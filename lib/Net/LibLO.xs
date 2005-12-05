@@ -14,7 +14,7 @@
 
 
 
-MODULE = LibLO	PACKAGE = LibLO
+MODULE = Net::LibLO	PACKAGE = Net::LibLO
 
 ##
 ## Return the error code for the last error
