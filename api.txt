@@ -1,36 +1,57 @@
 
 Net::LibLO::Address
-	- new(host, port) or url
-	- get hostname
-	- get port
-	- get url
-	- free
+	- new(url)
+	- new(host, port)
+	- get_hostname
+	- get_port
+	- get_url
+	- errno
+	- errstr
+	- DESTROY
 
 Net::LibLO::Message
-	- pretty print
+	- new
+	- new(type, args)
+	- add_int32
+	- add_float
+	- add_string
+	- add_double
+	- add_symbol
+	- add_char
+	- add_true
+	- add_false
+	- add_nil
+	- add_infinitum
+	- length
+	- pretty_print
+*	- serialise
+*	- get_source
+	- DESTROY
 	
 Net::LibLO::Bundle
-	- new (timetag)
-	- add message
-	- length
-	- serialize
-	- free
-	
-Net::LibLO::Blob?
 	- new
-	- size
+	- new(sec, frac)
+	- add_message(path, message)
+	- add_message(path, type, args )
+	- length 
+*	- serialise
+	- DESTROY
 	
-
 Net::LibLO( port_string )
-	- new (port, protocol )
-	- send
-	- send_timestamped
+	- new
+	- new(port, protocol)
+	- send(dest, bundle)
+	- send(dest, path, message)
+	- send(dest, path, type, @params)
+?	- send_timestamped( dest, timetag, path, message )
+?	- send_timestamped( dest, timetag, path, type, @params )
 	- recv
 	- recv_noblock( timeout )
 	- add_method
 	- del_method
 	- get_port
 	- get_url
-	- events_pending
-	- next_event_delay
-	- free
+?	- events_pending
+?	- next_event_delay
+	- DESTROY
+

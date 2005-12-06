@@ -1,6 +1,7 @@
 Build.PL
 Changes
-lib/Net/LibLO/Client.pm
+lib/Net/LibLO/Address.pm
+lib/Net/LibLO/Bundle.pm
 lib/Net/LibLO/Message.pm
 lib/Net/LibLO.pm
 lib/Net/LibLO.xs
@@ -9,5 +10,5 @@ MANIFEST
 META.yml
 README
 t/00use.t
+t/10address.t
 t/10message.t
-t/20client.t

@@ -11,8 +11,8 @@ BEGIN { plan tests => 3 }
 use Net::LibLO;
 ok(1);
 
-# Check Net::LibLO::Message loads ok
-use Net::LibLO::Message;
+# Check Net::LibLO::Address loads ok
+use Net::LibLO::Address;
 ok(1);
 
 # Check Net::LibLO::Client loads ok

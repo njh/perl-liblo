@@ -13,34 +13,13 @@
 #include <lo/lo.h>
 
 
+void my_lo_error(int num, const char *msg, const char *path)
+{
+    fprintf(stderr,"liblo server error %d in path %s: %s\n", num, path, msg);
+}
+
 
 MODULE = Net::LibLO	PACKAGE = Net::LibLO
-
-##
-## Return the error code for the last error
-## associated with an address
-##
-int
-lo_address_errno( address )
-	lo_address	address
-  CODE:
-	RETVAL = lo_address_errno( address );
-  OUTPUT:
-	RETVAL
-
-
-##
-## Return the error string from the last error
-## associated with an address
-##
-const char*
-lo_address_errstr( address )
-	lo_address address
-  CODE:
-	RETVAL = lo_address_errstr( address );
-  OUTPUT:
-	RETVAL
-
 
 ##
 ## New address from host and port
@@ -66,6 +45,68 @@ lo_address_new_from_url ( url )
   OUTPUT:
 	RETVAL
 
+
+##
+## Return the error code for the last error
+## associated with an address
+##
+int
+lo_address_errno( address )
+	lo_address	address
+  CODE:
+	RETVAL = lo_address_errno( address );
+  OUTPUT:
+	RETVAL
+
+
+##
+## Return the error string from the last error
+## associated with an address
+##
+const char*
+lo_address_errstr( address )
+	lo_address address
+  CODE:
+	RETVAL = lo_address_errstr( address );
+  OUTPUT:
+	RETVAL
+	
+##
+## Return the hostname part of lo_address
+##
+const char*
+lo_address_get_hostname( address )
+	lo_address address
+  CODE:
+	RETVAL = lo_address_get_hostname( address );
+  OUTPUT:
+	RETVAL
+	
+##
+## Return the port part of lo_address
+##
+const char*
+lo_address_get_port( address )
+	lo_address address
+  CODE:
+	RETVAL = lo_address_get_port( address );
+  OUTPUT:
+	RETVAL
+	
+##
+## Return the URL of a lo_address
+##
+SV*
+lo_address_get_url( address )
+	lo_address address
+  PREINIT:
+	char *  urlstr = NULL;
+  CODE:
+	urlstr = lo_address_get_url( address );
+	RETVAL = newSVpv( urlstr, 0 );
+	free( urlstr );
+  OUTPUT:
+	RETVAL
 
 ##
 ## Free up memory used by an address
@@ -113,20 +154,6 @@ lo_blob_free ( blob )
 	lo_blob	blob
   CODE:
 	lo_blob_free( blob );
-
-
-##
-## Send an OSC message (now)
-##
-int
-lo_send_message( address, path, message )
-	lo_address	 address
-	const char*  path
-	lo_message   message
-  CODE:
-	RETVAL = lo_send_message( address, path, message );
-  OUTPUT:
-	RETVAL
 
 
 ##
@@ -226,4 +253,122 @@ lo_message_add_true(msg)
 	lo_message   msg
   CODE:
   	lo_message_add_true( msg );
+
+lo_address
+lo_message_get_source(msg)
+	lo_message   msg
+  CODE:
+  	RETVAL = lo_message_get_source( msg );
+  OUTPUT:
+	RETVAL
+
+
+##
+## New Bundle
+##
+lo_bundle
+lo_bundle_new( sec, frac )
+	int sec
+	int frac
+  PREINIT:
+	lo_timetag tt;
+  CODE:
+  	tt.sec = sec;
+  	tt.frac = frac;
+	RETVAL = lo_bundle_new( tt );
+  OUTPUT:
+	RETVAL
+
+
+##
+## Add a message to a Bundle
+##
+void
+lo_bundle_add_message(b, path, m)
+	lo_bundle b
+	const char *path
+	lo_message m
+  CODE:
+  	lo_bundle_add_message( b, path, m );
+
+
+##
+## Get length of a Bundle
+##
+int
+lo_bundle_length(b)
+	lo_bundle b
+  CODE:
+	RETVAL = lo_bundle_length( b );
+  OUTPUT:
+	RETVAL
+
+
+##
+## Pretty Print Bundle
+##
+void
+lo_bundle_pp ( b )
+	lo_bundle b
+  CODE:
+	lo_bundle_pp( b );
+
+##
+## Free Bundle
+##
+void
+lo_bundle_free ( b )
+	lo_bundle b
+  CODE:
+	lo_bundle_free( b );
+
+
+##
+## Create a new server
+##
+lo_server
+lo_server_new_with_proto( port, protostr )
+	const char * port
+	const char * protostr
+  PREINIT:
+	int proto = -1;
+  CODE:
+  
+    if (strcmp( protostr, "udp") == 0) proto = LO_UDP;
+    else if (strcmp( protostr, "unix") == 0) proto = LO_UNIX;
+    else if (strcmp( protostr, "tcp") == 0) proto = LO_TCP;
+
+	if (proto != -1) {
+		RETVAL = lo_server_new_with_proto( port, proto, my_lo_error );
+	} else {
+		RETVAL = NULL;
+	}
+	
+  OUTPUT:
+	RETVAL
+
+
+##
+## Send an OSC message
+##
+int
+lo_send_message_from( address, from, path, message )
+	lo_address	 address
+	lo_server	 from
+	const char*  path
+	lo_message   message
+  CODE:
+	RETVAL = lo_send_message_from( address, from, path, message );
+  OUTPUT:
+	RETVAL
+
+
+##
+## Free up server
+##
+void
+lo_server_free( s )
+	lo_server s
+  CODE:
+	lo_server_free( s );
 

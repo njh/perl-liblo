@@ -51,8 +51,12 @@ print "# length of message is $length bytes.\n";
 ok( $length, 56 );
 
 
+# XXX: Check serialize here 
+
+
 # Delete the message
 undef $mesg;
 ok(1);
 
 exit;
+

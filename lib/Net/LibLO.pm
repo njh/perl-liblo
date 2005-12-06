@@ -9,6 +9,10 @@ package Net::LibLO;
 
 use XSLoader;
 use Carp;
+
+use Net::LibLO::Address;
+use Net::LibLO::Message;
+use Net::LibLO::Bundle;
 use strict;
 
 use vars qw/$VERSION/;
@@ -16,6 +20,83 @@ use vars qw/$VERSION/;
 $VERSION="0.03";
 
 XSLoader::load('Net::LibLO', $VERSION);
+
+
+
+sub new {
+    my $class = shift;
+    my ($port, $protocol) = @_;
+    
+    # Default to using UDP
+    $protocol = 'udp' if (!defined $protocol);
+
+
+    # Bless the hash into an object
+    my $self = {
+    	port => $port,
+    	protocol => $protocol,
+    };
+    bless $self, $class;
+        
+    # Create new server instance
+    $self->{server} = Net::LibLO::lo_server_new_with_proto( $port, $protocol );
+    if (!defined $server) {
+    	warn "Error creating lo_server";
+    	return undef;
+    }
+
+   	return $self;
+}
+
+sub get_port {
+    my $self=shift;
+
+	return Net::LibLO::lo_server_get_port( $self->{server} );
+}
+
+sub get_url {
+    my $self=shift;
+
+	return Net::LibLO::lo_server_get_url( $self->{server} );
+}
+
+sub add_method {
+    my $self=shift;
+    my ($path, $typespec, $handler, $userdata) = @_;
+    
+
+}
+
+sub del_method {
+    my $self=shift;
+    my ($path, $typespec) = @_;
+
+}
+
+sub send {
+	my $self=shift;
+
+}
+
+sub recv {
+	my $self=shift;
+
+}
+
+sub recv_noblock {
+	my $self=shift;
+	my ($timeout) = @_;
+
+}
+
+sub DESTROY {
+    my $self=shift;
+    
+    if (defined $self->{server}) {
+    	Net::LibLO::lo_server_free( $self->{server} );
+    	undef $self->{server};
+    }
+}
 
 
 1;

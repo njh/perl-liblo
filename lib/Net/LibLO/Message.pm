@@ -104,12 +104,22 @@ sub length {
 	my $self=shift;
 	my ($path) = @_;
 	croak('Usage: $msg->length( $path )') unless (defined $path);
-	Net::LibLO::lo_message_length( $self->{message}, $path );
+	return Net::LibLO::lo_message_length( $self->{message}, $path );
+}
+
+sub get_source {
+	my $self=shift;
+	return Net::LibLO::lo_message_get_source( $self->{message} );
 }
 
 sub pretty_print {
 	my $self=shift;
 	Net::LibLO::lo_message_pp( $self->{message} );
+}
+
+sub serialise {
+	my $self=shift;
+	return Net::LibLO::lo_message_serialise( $self->{message} );
 }
 
 sub DESTROY {
