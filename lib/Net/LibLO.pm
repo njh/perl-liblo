@@ -40,7 +40,7 @@ sub new {
         
     # Create new server instance
     $self->{server} = Net::LibLO::lo_server_new_with_proto( $port, $protocol );
-    if (!defined $server) {
+    if (!defined $self->{server}) {
     	warn "Error creating lo_server";
     	return undef;
     }

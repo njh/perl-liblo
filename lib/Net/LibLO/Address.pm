@@ -24,7 +24,7 @@ sub new {
     # 2 parameters = host and port
     if (scalar(@_)==1) {
     
-    	print "arg: ".ref(@_[0])."\n";
+    	warn "arg: ".ref(@_[0])."\n";
     	#my ($url) = @_;
 		#$self->{address} = Net::LibLO::lo_address_new_from_url( $url );
     	
