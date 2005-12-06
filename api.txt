@@ -1,0 +1,36 @@
+
+Net::LibLO::Address
+	- new(host, port) or url
+	- get hostname
+	- get port
+	- get url
+	- free
+
+Net::LibLO::Message
+	- pretty print
+	
+Net::LibLO::Bundle
+	- new (timetag)
+	- add message
+	- length
+	- serialize
+	- free
+	
+Net::LibLO::Blob?
+	- new
+	- size
+	
+
+Net::LibLO( port_string )
+	- new (port, protocol )
+	- send
+	- send_timestamped
+	- recv
+	- recv_noblock( timeout )
+	- add_method
+	- del_method
+	- get_port
+	- get_url
+	- events_pending
+	- next_event_delay
+	- free
