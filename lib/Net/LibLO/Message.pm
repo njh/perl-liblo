@@ -17,6 +17,12 @@ sub new {
     my $class = shift;
     my $self = { message => Net::LibLO::lo_message_new() };
     
+    # Was there an error ?
+    if (!defined $self->{message}) {
+    	warn "Error creating lo_message";
+    	return undef;
+    }
+
     # Bless the hash into an object
     bless $self, $class;
     
