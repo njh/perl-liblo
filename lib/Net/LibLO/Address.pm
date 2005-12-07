@@ -24,7 +24,7 @@ sub new {
     # 2 parameters = host and port
     if (scalar(@_)==1) {
     
-    	warn "arg: ".ref(@_[0])."\n";
+    	warn "arg: ".ref($_[0])."\n";
     	#my ($url) = @_;
 		#$self->{address} = Net::LibLO::lo_address_new_from_url( $url );
     	
@@ -38,7 +38,7 @@ sub new {
     
     # Was there an error ?
     if (!defined $self->{address}) {
-    	warn "Error creating lo_address";
+    	carp("Error creating lo_address");
     	undef $self;
     }
     

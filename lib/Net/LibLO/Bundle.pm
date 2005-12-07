@@ -26,8 +26,8 @@ sub new {
 
     # 2 parameters = seconds and fraction
     if (scalar(@_)==2) {
-		$self->{sec} = @_[0];
-		$self->{frac} = @_[1];
+		$self->{sec} = $_[0];
+		$self->{frac} = $_[1];
     } elsif (scalar(@_)!=0) {
     	croak( "Invalid number of parameters" );
     }
@@ -37,7 +37,7 @@ sub new {
     
     # Was there an error ?
     if (!defined $self->{bundle}) {
-    	warn "Error creating lo_bundle";
+    	carp("Error creating lo_bundle");
     	undef $self;
     }
     

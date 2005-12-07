@@ -19,7 +19,7 @@ sub new {
     
     # Was there an error ?
     if (!defined $self->{message}) {
-    	warn "Error creating lo_message";
+    	carp("Error creating lo_message");
     	return undef;
     }
 
