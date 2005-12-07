@@ -16,10 +16,15 @@ if ($pkgconfig =~ /not found/) {
 my $liblo_version = `$pkgconfig --modversion liblo`;
 chomp($liblo_version);
 if ($liblo_version !~ /^\d+\.\d+$/) {
-	print $liblo_version;
+	print STDERR $liblo_version;
 	exit -1;
 } else {
 	print "Found liblo library version $liblo_version.\n";
+}
+
+# Is it new enough ?
+if ($liblo_version < 0.23) {
+	die "LibLO Version 0.23 or higher is required.\n";
 }
 
 # Get CFLAGS and LDFLAGS
