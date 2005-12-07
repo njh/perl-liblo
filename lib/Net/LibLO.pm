@@ -27,22 +27,19 @@ sub new {
     my $class = shift;
     my ($port, $protocol) = @_;
     
-    # Default to using UDP
+    # Default to using random UDP port
+    $port = '' if (!defined $port);
     $protocol = 'udp' if (!defined $protocol);
 
-
     # Bless the hash into an object
-    my $self = {
-    	port => $port,
-    	protocol => $protocol,
-    };
+    my $self = {};
     bless $self, $class;
         
     # Create new server instance
     $self->{server} = Net::LibLO::lo_server_new_with_proto( $port, $protocol );
     if (!defined $self->{server}) {
-    	warn "Error creating lo_server";
-    	return undef;
+    	carp("Error creating lo_server");
+    	undef $self;
     }
 
    	return $self;

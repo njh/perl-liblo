@@ -17,6 +17,13 @@ my $mesg = new Net::LibLO::Message( 's', 'Hello World' );
 ok( $mesg );
 
 
+# Check port
+ok( $lo->get_port() =~ /^\d{4,}$/ );
+
+# Check URL
+ok( $lo->get_url() =~ /^osc\.udp\:\/\// );
+
+
 # Send Message
 my $result = $lo->send( $addr, '/foo', $mesg );
 ok( $result, 0 );

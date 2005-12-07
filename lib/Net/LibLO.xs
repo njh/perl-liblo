@@ -334,6 +334,8 @@ lo_server_new_with_proto( port, protostr )
 	int proto = -1;
   CODE:
   
+  	if (strlen(port)==0) port = NULL;
+  
     if (strcmp( protostr, "udp") == 0) proto = LO_UDP;
     else if (strcmp( protostr, "unix") == 0) proto = LO_UNIX;
     else if (strcmp( protostr, "tcp") == 0) proto = LO_TCP;
@@ -346,6 +348,34 @@ lo_server_new_with_proto( port, protostr )
 	
   OUTPUT:
 	RETVAL
+
+	
+##
+## Get port of server
+##
+int
+lo_server_get_port(s)
+	lo_server s
+  CODE:
+	RETVAL = lo_server_get_port( s );
+  OUTPUT:
+	RETVAL
+
+##
+## Get URL of server
+##
+SV*
+lo_server_get_url( server )
+	lo_server server
+  PREINIT:
+	char *  urlstr = NULL;
+  CODE:
+	urlstr = lo_server_get_url( server );
+	RETVAL = newSVpv( urlstr, 0 );
+	free( urlstr );
+  OUTPUT:
+	RETVAL
+
 
 
 ##

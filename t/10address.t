@@ -28,7 +28,7 @@ ok(1);
 
 
 # Create a new address object from a URL
-my $addr = new Net::LibLO::Address( 'osc.tcp://example.net:1234/' );
+$addr = new Net::LibLO::Address( 'osc.tcp://example.net:1234/' );
 ok( $addr );
 
 # Check for error number
