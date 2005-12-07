@@ -20,13 +20,11 @@ sub new {
     # Bless the hash into an object
     bless $self, $class;
 
-    # 1 parameter = URL, lo_address
+    # 1 parameter = URL
     # 2 parameters = host and port
     if (scalar(@_)==1) {
-    
-    	warn "arg: ".ref($_[0])."\n";
-    	#my ($url) = @_;
-		#$self->{address} = Net::LibLO::lo_address_new_from_url( $url );
+		my ($url) = @_;
+		$self->{address} = Net::LibLO::lo_address_new_from_url( $url );
     	
     } elsif (scalar(@_)==2) {
     	my ($host, $port) = @_;
