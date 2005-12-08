@@ -392,6 +392,19 @@ lo_send_message_from( address, from, path, message )
   OUTPUT:
 	RETVAL
 
+##
+## Send an OSC bundle
+##
+int
+lo_send_bundle_from( address, from, bundle )
+	lo_address	 address
+	lo_server	 from
+	lo_bundle   bundle
+  CODE:
+	RETVAL = lo_send_bundle_from( address, from, bundle );
+  OUTPUT:
+	RETVAL
+
 
 ##
 ## Free up server

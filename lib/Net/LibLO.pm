@@ -72,7 +72,41 @@ sub del_method {
 
 sub send {
 	my $self=shift;
+	my $dest=shift;
+	my $addr = undef;
+	
+	# Contruct an address object ?
+	if (ref($dest) eq '') {
+		$dest = new Net::LibLO::Address( $dest );
+	}
+	
+	# Get the lo_address
+	if (ref($dest) eq 'Net::LibLO::Address') {
+		$addr = $dest->{'address'};
+	} elsif (ref($dest) eq 'Net::LibLO::Address') {
+		$addr = $dest;
+	}
+	
+	# Check we have an lo_address
+	return -3 if (!defined $addr or ref($addr) ne 'lo_address');
+	
 
+	if (ref($_[0]) eq 'Net::LibLO::Bundle') {
+		# Send a bundle
+		my $bundle = shift;
+		return Net::LibLO::lo_send_bundle_from( $addr, $self->{'server'}, $bundle->{'bundle'} );
+	} else {
+		# Send a meesage
+		my $path = shift;
+		my $mesg;
+		if (ref($_[0]) eq 'Net::LibLO::Message') {
+			$mesg = $_[0];
+		} else {
+			$mesg = new Net::LibLO::Message( @_ );
+		}
+		
+		return Net::LibLO::lo_send_message_from( $addr, $self->{'server'}, $path, $mesg->{'message'} );
+	}
 }
 
 sub recv {
