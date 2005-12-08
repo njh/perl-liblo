@@ -47,21 +47,25 @@ sub new {
 
 sub get_port {
     my $self=shift;
-
 	return Net::LibLO::lo_server_get_port( $self->{server} );
 }
 
 sub get_url {
     my $self=shift;
-
 	return Net::LibLO::lo_server_get_url( $self->{server} );
 }
 
 sub add_method {
     my $self=shift;
-    my ($path, $typespec, $handler, $userdata) = @_;
+    my ($path, $typespec, $handler) = @_;
     
-
+    # Add the method handler
+	my $handler = Net::LibLO::lo_server_add_method( $self->{server}, $path, $typespec, $handler );
+	if (!defined $handler) {
+    	carp("Error creating adding method handler");
+	}
+	
+	return $handler;
 }
 
 sub del_method {
