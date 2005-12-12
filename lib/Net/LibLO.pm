@@ -32,7 +32,7 @@ sub new {
     $protocol = 'udp' if (!defined $protocol);
 
     # Bless the hash into an object
-    my $self = {};
+    my $self = { 'method_handlers'=>[] };
     bless $self, $class;
         
     # Create new server instance
@@ -53,25 +53,6 @@ sub get_port {
 sub get_url {
     my $self=shift;
 	return Net::LibLO::lo_server_get_url( $self->{server} );
-}
-
-sub add_method {
-    my $self=shift;
-    my ($path, $typespec, $handler) = @_;
-    
-    # Add the method handler
-	my $handler = Net::LibLO::lo_server_add_method( $self->{server}, $path, $typespec, $handler );
-	if (!defined $handler) {
-    	carp("Error creating adding method handler");
-	}
-	
-	return $handler;
-}
-
-sub del_method {
-    my $self=shift;
-    my ($path, $typespec) = @_;
-
 }
 
 sub send {
@@ -116,13 +97,66 @@ sub send {
 sub recv {
 	my $self=shift;
 
+	return Net::LibLO::lo_server_recv( $self->{'server'} );
 }
 
 sub recv_noblock {
 	my $self=shift;
 	my ($timeout) = @_;
 
+	$timeout = 0 unless (defined $timeout);
+
+	return Net::LibLO::lo_server_recv_noblock( $self->{'server'}, $timeout );
 }
+
+sub add_method {
+    my $self=shift;
+    my ($path, $typespec, $handler) = @_;
+    
+    # Check parameters
+    carp "Missing typespec parameter" unless (defined $typespec);
+    carp "Missing path parameter" unless (defined $path);
+    carp "Missing handler parameter" unless (defined $handler);
+    #carp "Handle parameter isn't subroutine reference" unless (ref
+    
+    # Create hashref to store info in
+    my $handle_ref = {
+    	'method' => $handler,
+    	'server' => $self,
+    	'path' => $path,
+    	'typespec' => $typespec
+    };
+    
+    # Add the method handler
+	my $result = Net::LibLO::lo_server_add_method( $self->{server}, $path, $typespec, $handle_ref );
+	if (!defined $result) {
+    	carp("Error adding method handler");
+	} else {
+		# Add it to array of method handlers
+		push( @{$self->{'method_handlers'}}, $handle_ref );
+	}
+	
+	return $result;
+}
+
+sub del_method {
+    my $self=shift;
+    my ($path, $typespec) = @_;
+
+	#my $result = Net::LibLO::lo_server_del_method( $self->{server}, $path, $typespec );
+
+	# XXX: Remove from array too
+}
+
+sub _method_dispatcher {
+	my ($ref, $mesg, $path, $type, @params) = @_;
+
+	# Call the proper perl subroutine
+	#$ref->{method}( $serv, $mesg, $path, $type, @params);
+	
+	print "_method_dispatcher($ref, $mesg, $path, $type, ...)\n";
+}
+
 
 sub DESTROY {
     my $self=shift;

@@ -12,11 +12,26 @@
 
 #include <lo/lo.h>
 
-
-void my_lo_error(int num, const char *msg, const char *path)
+void xs_liblo_error(int num, const char *msg, const char *path)
 {
     fprintf(stderr,"liblo server error %d in path %s: %s\n", num, path, msg);
 }
+
+int xs_liblo_handler(const char *path, const char *types,
+				 lo_arg **argv, int argc, lo_message msg,
+				 void *user_data)
+{
+	int args=0;
+
+	printf( "xs_liblo_handler(%s, %s)\n", path, types );
+	
+	// Call the perl handler (see perlcall manpage)
+	args = perl_call_pv( "Net::LibLO::_method_dispatcher" , G_SCALAR );
+	
+	// Success
+	return 0;
+}
+
 
 
 MODULE = Net::LibLO	PACKAGE = Net::LibLO
@@ -341,7 +356,7 @@ lo_server_new_with_proto( port, protostr )
     else if (strcmp( protostr, "tcp") == 0) proto = LO_TCP;
 
 	if (proto != -1) {
-		RETVAL = lo_server_new_with_proto( port, proto, my_lo_error );
+		RETVAL = lo_server_new_with_proto( port, proto, xs_liblo_error );
 	} else {
 		RETVAL = NULL;
 	}
@@ -376,6 +391,42 @@ lo_server_get_url( server )
   OUTPUT:
 	RETVAL
 
+##
+## Get URL of server
+##
+lo_method
+lo_server_add_method( server, path, typespec, userdata )
+	lo_server server
+	const char* path
+	const char* typespec
+	SV* userdata
+  CODE:
+  	RETVAL = lo_server_add_method( server, path, typespec, xs_liblo_handler, userdata );
+  OUTPUT:
+  	RETVAL
+
+##
+## Wait for an OSC packet to arrive
+##
+int
+lo_server_recv( server )
+	lo_server	 server
+  CODE:
+	RETVAL = lo_server_recv( server );
+  OUTPUT:
+	RETVAL
+
+##
+## Wait for an OSC packet to arrive
+##
+int
+lo_server_recv_noblock( server, timeout )
+	lo_server	 server
+	int			 timeout
+  CODE:
+	RETVAL = lo_server_recv_noblock( server, timeout );
+  OUTPUT:
+	RETVAL
 
 
 ##
@@ -392,6 +443,7 @@ lo_send_message_from( address, from, path, message )
   OUTPUT:
 	RETVAL
 
+
 ##
 ## Send an OSC bundle
 ##
@@ -399,7 +451,7 @@ int
 lo_send_bundle_from( address, from, bundle )
 	lo_address	 address
 	lo_server	 from
-	lo_bundle   bundle
+	lo_bundle    bundle
   CODE:
 	RETVAL = lo_send_bundle_from( address, from, bundle );
   OUTPUT:

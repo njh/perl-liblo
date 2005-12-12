@@ -36,11 +36,11 @@ $result = $lo->send( $addr, $bundle );
 ok( $result, 44 );
 
 # Send Message to localhost port 4538
-my $result = $lo->send( 4538, '/foo', $mesg );
+$result = $lo->send( 4538, '/foo', $mesg );
 ok( $result, 24 );
 
 # Send Message to localhost port 4564
-my $result = $lo->send( 'osc.udp://localhost:4564/', '/foo', $mesg );
+$result = $lo->send( 'osc.udp://localhost:4564/', '/foo', $mesg );
 ok( $result, 24 );
 
 

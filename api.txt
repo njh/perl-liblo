@@ -11,7 +11,7 @@ Net::LibLO::Address
 
 Net::LibLO::Message
 	- new
-	- new(type, args)
+	- new(typespec, args)
 	- add_int32
 	- add_float
 	- add_string
@@ -32,7 +32,7 @@ Net::LibLO::Bundle
 	- new
 	- new(sec, frac)
 	- add_message(path, message)
-	- add_message(path, type, args )
+	- add_message(path, typespec, args )
 	- length 
 *	- serialise
 	- DESTROY
@@ -42,16 +42,19 @@ Net::LibLO( port_string )
 	- new(port, protocol)
 	- send(dest, bundle)
 	- send(dest, path, message)
-	- send(dest, path, type, @params)
+	- send(dest, path, typespec, @params)
 ?	- send_timestamped( dest, timetag, path, message )
-?	- send_timestamped( dest, timetag, path, type, @params )
+?	- send_timestamped( dest, timetag, path, typespec, @params )
 	- recv
 	- recv_noblock( timeout )
-	- add_method
-	- del_method
+	- add_method( path, typespec, handler, userdata )
+	- del_method( path, typespec )
 	- get_port
 	- get_url
 ?	- events_pending
 ?	- next_event_delay
 	- DESTROY
 
+	
+	handler( serv, mesg, path, typespec, userdata, @params )
+	

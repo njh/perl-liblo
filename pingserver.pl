@@ -14,10 +14,8 @@ my $lo = new Net::LibLO( 4542 );
 $lo->add_method( '/osc/ping', '', \&pinghandler );
 
 # Wait for ping
-$lo->recv();
-
-
-print "Finished.\n";
+my $bytes = $lo->recv();
+print "Recieved $bytes bytes.\n";
 
 
 

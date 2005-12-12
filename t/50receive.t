@@ -1,4 +1,5 @@
 use strict;
+use Data::Dumper;
 use Test;
 
 
@@ -12,7 +13,10 @@ use Net::LibLO;
 my $lo = new Net::LibLO();
 
 # Add method
+$lo->add_method( '/foo', 'i', \&myhandler );
+$lo->add_method( '/bar', 's', \&myhandler );
 
+print Dumper( $lo );
 
 # Destroy the LibLO object
 undef $lo;
@@ -25,7 +29,7 @@ exit;
 
 
 sub myhandler {
-	my ($serv, $mesg, $path, $types, @params) = @_;
+	my ($serv, $mesg, $path, $typespec, @params) = @_;
 
-	
+	#print Dumper( @_ );
 }
