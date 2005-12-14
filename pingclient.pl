@@ -33,5 +33,6 @@ print "Finished.\n";
 
 sub replyhandler {
 	my ($serv, $mesg, $path, $typespec, @params) = @_;
-	print "Got reply.\n";
+	my $from = $mesg->get_source();
+	print "Got reply from '".$from->get_url()."'.\n";
 }
