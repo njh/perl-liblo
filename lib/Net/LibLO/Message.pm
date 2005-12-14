@@ -134,11 +134,6 @@ sub pretty_print {
 	Net::LibLO::lo_message_pp( $self->{message} );
 }
 
-sub serialise {
-	my $self=shift;
-	return Net::LibLO::lo_message_serialise( $self->{message} );
-}
-
 sub DESTROY {
     my $self=shift;
     
@@ -252,8 +247,6 @@ Adds a symbol representing the value B<Nil> to the message.
 =item B<add_infinitum()>
 
 Adds a symbol representing the value B<Infinitum> to the message.
-
-
 
 =item B<length( path )>
 

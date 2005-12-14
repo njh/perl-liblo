@@ -68,11 +68,6 @@ sub length {
 	return Net::LibLO::lo_bundle_length( $self->{bundle} );
 }
 
-sub serialise {
-	my $self=shift;
-	return Net::LibLO::lo_bundle_serialise( $self->{bundle} );
-}
-
 sub pretty_print {
 	my $self=shift;
 	Net::LibLO::lo_bundle_pp( $self->{bundle} );
@@ -134,10 +129,6 @@ Message is a Net::LibLO::Message object.
 =item B<length( )>
 
 Returns the length of the message (in bytes).
-
-=item B<serialise( )>
-
-Returns a network packed version of the bundle.
 
 =item B<pretty_print( )>
 
