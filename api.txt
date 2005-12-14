@@ -25,7 +25,7 @@ Net::LibLO::Message
 	- length
 	- pretty_print
 *	- serialise
-*	- get_source
+	- get_source
 	- DESTROY
 	
 Net::LibLO::Bundle
@@ -43,16 +43,16 @@ Net::LibLO( port_string )
 	- send(dest, bundle)
 	- send(dest, path, message)
 	- send(dest, path, typespec, @params)
-?	- send_timestamped( dest, timetag, path, message )
-?	- send_timestamped( dest, timetag, path, typespec, @params )
+*	- send_timestamped( dest, timetag, path, message )
+*	- send_timestamped( dest, timetag, path, typespec, @params )
 	- recv
 	- recv_noblock( timeout )
 	- add_method( path, typespec, handler, userdata )
 	- del_method( path, typespec )
 	- get_port
 	- get_url
-?	- events_pending
-?	- next_event_delay
+*	- events_pending
+*	- next_event_delay
 	- DESTROY
 
 	
