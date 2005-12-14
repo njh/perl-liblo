@@ -12,20 +12,20 @@ my $lo = new Net::LibLO( 4542 );
 
 
 # Add method
-$lo->add_method( '/osc/ping', '', \&pinghandler );
+$lo->add_method( '/ping', '', \&pinghandler , 69);
 
-# Wait for ping
-my $bytes = $lo->recv();
-print "Recieved $bytes bytes.\n";
-
+# Wait for pings
+while(1) {
+	my $bytes = $lo->recv();
+	print "Recieved $bytes byte message.\n";
+}
 
 
 
 sub pinghandler {
-	my ($serv, $mesg, $path, $typespec, @params) = @_;
+	my ($serv, $mesg, $path, $typespec, $userdata, @params) = @_;
 	my $from = $mesg->get_source();
-	print Dumper( @_ );
 	print "Got ping from ".$from->get_url().".\n";
 	
-	$serv->send( $from, '/reply', 's', '/osc/ping' );
+	$serv->send( $from, '/pong' );
 }

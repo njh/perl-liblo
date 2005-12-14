@@ -12,10 +12,10 @@ my $addr = new Net::LibLO::Address( 'localhost', 4542 );
 
 
 # Add reply handler
-$lo->add_method( '/reply', 's', \&replyhandler );
+$lo->add_method( '/pong', '', \&ponghandler );
 
 # Send the ping message
-my $result = $lo->send( $addr, '/osc/ping' );
+my $result = $lo->send( $addr, '/ping' );
 if ($result <= 0) {
 	print "Pinging ".$addr->get_url()." failed: $result\n";
 } else {
@@ -23,16 +23,16 @@ if ($result <= 0) {
 }
 
 # Wait for reply
-$lo->recv();
+my $reply = $lo->recv_noblock( 2000 );
+if (!$reply) {
+	warn "Timed out after 2 seconds.\n"; 
+}
 
 
-print "Finished.\n";
 
 
-
-
-sub replyhandler {
+sub ponghandler {
 	my ($serv, $mesg, $path, $typespec, @params) = @_;
 	my $from = $mesg->get_source();
-	print "Got reply from '".$from->get_url()."'.\n";
+	print "Got pong from '".$from->get_url()."'.\n";
 }
