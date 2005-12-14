@@ -15,7 +15,14 @@ use strict;
 
 sub new {
     my $class = shift;
-    my $self = { message => Net::LibLO::lo_message_new() };
+    my $self = {};
+    
+    # Was an lo_message passed to us?
+    if( ref($_[0]) eq "lo_message") {
+    	$self->{message} = shift;
+    } else {
+    	$self->{message} = Net::LibLO::lo_message_new();
+    }
     
     # Was there an error ?
     if (!defined $self->{message}) {
@@ -115,7 +122,9 @@ sub length {
 
 sub get_source {
 	my $self=shift;
-	return Net::LibLO::lo_message_get_source( $self->{message} );
+	return new Net::LibLO::Address( 
+		Net::LibLO::lo_message_get_source( $self->{message} )
+	);
 }
 
 sub pretty_print {

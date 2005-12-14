@@ -18,18 +18,60 @@ void xs_liblo_error(int num, const char *msg, const char *path)
 }
 
 int xs_liblo_handler(const char *path, const char *types,
-				 lo_arg **argv, int argc, lo_message msg,
+				 lo_arg **argv, int argc, lo_message mesg,
 				 void *user_data)
 {
-	int args=0;
+	dSP ;
+	int i, result, count=0;
+	SV* msgsv = sv_newmortal();
+	sv_setref_pv(msgsv, "lo_message", (void*)mesg);
 
-	printf( "xs_liblo_handler(%s, %s)\n", path, types );
+	ENTER;
+	SAVETMPS;
 	
+	PUSHMARK(sp) ;
+	XPUSHs((SV*)user_data);
+	XPUSHs(msgsv);
+	XPUSHs(sv_2mortal(newSVpv(path, 0)));
+	XPUSHs(sv_2mortal(newSVpv(types, 0)));
+	
+	// Put parameters on the stack
+	for(i=0; i<argc; i++) {
+		switch(types[i]) {
+			case 'i': XPUSHs(sv_2mortal(newSViv(argv[i]->i))); break;
+			case 'f': XPUSHs(sv_2mortal(newSVnv(argv[i]->f))); break;
+			case 's': XPUSHs(sv_2mortal(newSVpv(&argv[i]->s,0))); break;
+			case 'd': XPUSHs(sv_2mortal(newSVnv(argv[i]->d))); break;
+			case 'S': XPUSHs(sv_2mortal(newSVpv(&argv[i]->s,0))); break;
+			case 'c': XPUSHs(sv_2mortal(newSVpv((char*)&argv[i]->c, 1))); break;
+			case 'T': XPUSHs(sv_2mortal(newSVpv("True",4))); break;
+			case 'F': XPUSHs(sv_2mortal(newSVpv("0False0",7))); break;
+			case 'N': XPUSHs(sv_2mortal(newSVpv("0Nil0",5))); break;
+			case 'I': XPUSHs(sv_2mortal(newSVpv("Infinitum",9))); break;
+			default:
+				carp( "xs_liblo_handler: Unsupported OSC type '%c'.", types[i] );
+			break;
+		}
+	}
+	
+	PUTBACK ;
+
 	// Call the perl handler (see perlcall manpage)
-	args = perl_call_pv( "Net::LibLO::_method_dispatcher" , G_SCALAR );
+	count = perl_call_pv( "Net::LibLO::_method_dispatcher", G_SCALAR );
 	
-	// Success
-	return 0;
+	SPAGAIN ;
+	
+	if (count != 1)
+		croak("Return value should be a scaler integer.\n") ;
+	
+	// Get the return value off the stack
+	result = POPi;
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+        
+	// Return the result return by the perl sub
+	return result;
 }
 
 
@@ -392,7 +434,7 @@ lo_server_get_url( server )
 	RETVAL
 
 ##
-## Get URL of server
+## Add method handler to server
 ##
 lo_method
 lo_server_add_method( server, path, typespec, userdata )
@@ -401,7 +443,7 @@ lo_server_add_method( server, path, typespec, userdata )
 	const char* typespec
 	SV* userdata
   CODE:
-  	RETVAL = lo_server_add_method( server, path, typespec, xs_liblo_handler, userdata );
+  	RETVAL = lo_server_add_method( server, path, typespec, xs_liblo_handler, newSVsv(userdata) );
   OUTPUT:
   	RETVAL
 

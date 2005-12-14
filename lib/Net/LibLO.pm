@@ -8,6 +8,7 @@ package Net::LibLO;
 #
 
 use XSLoader;
+use Data::Dumper;
 use Carp;
 
 use Net::LibLO::Address;
@@ -58,28 +59,16 @@ sub get_url {
 sub send {
 	my $self=shift;
 	my $dest=shift;
-	my $addr = undef;
 	
 	# Contruct an address object ?
-	if (ref($dest) eq '') {
-		$dest = new Net::LibLO::Address( $dest );
+	if (ref($dest) ne 'Net::LibLO::Address') {
+		$dest = new Net::LibLO::Address($dest);
 	}
 	
-	# Get the lo_address
-	if (ref($dest) eq 'Net::LibLO::Address') {
-		$addr = $dest->{'address'};
-	} elsif (ref($dest) eq 'Net::LibLO::Address') {
-		$addr = $dest;
-	}
-	
-	# Check we have an lo_address
-	return -3 if (!defined $addr or ref($addr) ne 'lo_address');
-	
-
 	if (ref($_[0]) eq 'Net::LibLO::Bundle') {
 		# Send a bundle
 		my $bundle = shift;
-		return Net::LibLO::lo_send_bundle_from( $addr, $self->{'server'}, $bundle->{'bundle'} );
+		return Net::LibLO::lo_send_bundle_from( $dest->{'address'}, $self->{'server'}, $bundle->{'bundle'} );
 	} else {
 		# Send a meesage
 		my $path = shift;
@@ -90,7 +79,7 @@ sub send {
 			$mesg = new Net::LibLO::Message( @_ );
 		}
 		
-		return Net::LibLO::lo_send_message_from( $addr, $self->{'server'}, $path, $mesg->{'message'} );
+		return Net::LibLO::lo_send_message_from( $dest->{'address'}, $self->{'server'}, $path, $mesg->{'message'} );
 	}
 }
 
@@ -111,12 +100,13 @@ sub recv_noblock {
 
 sub add_method {
     my $self=shift;
-    my ($path, $typespec, $handler) = @_;
+    my ($path, $typespec, $handler, $userdata) = @_;
     
     # Check parameters
     carp "Missing typespec parameter" unless (defined $typespec);
     carp "Missing path parameter" unless (defined $path);
     carp "Missing handler parameter" unless (defined $handler);
+    carp "Handler parameter isn't a code reference" unless (ref($handler) eq 'CODE');
     #carp "Handle parameter isn't subroutine reference" unless (ref
     
     # Create hashref to store info in
@@ -124,7 +114,8 @@ sub add_method {
     	'method' => $handler,
     	'server' => $self,
     	'path' => $path,
-    	'typespec' => $typespec
+    	'typespec' => $typespec,
+    	'userdata' => $userdata
     };
     
     # Add the method handler
@@ -149,12 +140,14 @@ sub del_method {
 }
 
 sub _method_dispatcher {
-	my ($ref, $mesg, $path, $type, @params) = @_;
+	my ($ref, $mesg, $path, $typespec, @params) = @_;
+	
+	my $serv = $ref->{server};
+	my $message = new Net::LibLO::Message( $mesg );
+	my $userdata = $ref->{userdata};
 
 	# Call the proper perl subroutine
-	#$ref->{method}( $serv, $mesg, $path, $type, @params);
-	
-	print "_method_dispatcher($ref, $mesg, $path, $type, ...)\n";
+	return &{$ref->{method}}( $serv, $message, $path, $typespec, $userdata, @params);
 }
 
 

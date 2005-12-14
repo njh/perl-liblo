@@ -4,6 +4,7 @@
 #
 
 use Net::LibLO;
+use Data::Dumper;
 use strict;
 
 # Create objects
@@ -22,7 +23,9 @@ print "Recieved $bytes bytes.\n";
 
 sub pinghandler {
 	my ($serv, $mesg, $path, $typespec, @params) = @_;
-
-	#print Dumper( @_ );
-	print "Got ping.\n";
+	my $from = $mesg->get_source();
+	print Dumper( @_ );
+	print "Got ping from ".$from->get_url().".\n";
+	
+	$serv->send( $from, '/reply', 's', '/osc/ping' );
 }

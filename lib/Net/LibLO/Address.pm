@@ -20,12 +20,15 @@ sub new {
     # Bless the hash into an object
     bless $self, $class;
 
-    # 1 parameter = URL or port
+    # 1 parameter = lo_addres, URL or port
     # 2 parameters = host and port
     if (scalar(@_)==1) {
     
     	# Is it a number ?
-    	if ($_[0] =~ /^\d+$/) {
+    	if (ref($_[0]) eq 'lo_address') {
+  			my ($address) = @_;
+			$self->{address} = $address;
+		} elsif ($_[0] =~ /^\d+$/) {
   			my ($port) = @_;
 			$self->{address} = Net::LibLO::lo_address_new( 'localhost', $port );
 		} else {
