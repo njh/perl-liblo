@@ -82,8 +82,11 @@ sub DESTROY {
     my $self=shift;
    
     if (defined $self->{bundle}) {
-    	Net::LibLO::lo_bundle_free( $self->{bundle} );
-    	undef $self->{bundle};
+    	# Don't free memory we didn't allocate
+		unless ($self->{dontfree}) {
+			Net::LibLO::lo_bundle_free( $self->{bundle} );
+		}
+		undef $self->{bundle};
     }
 }
 
