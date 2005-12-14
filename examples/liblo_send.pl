@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+
 use Net::LibLO;
 use strict;
 use Data::Dumper;
@@ -26,5 +28,4 @@ print "url: ".$lo->get_url()."\n";
 print Dumper( $lo );
 
 
-#undef $lo;
-undef $msg;
+undef $lo;

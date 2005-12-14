@@ -1,4 +1,4 @@
-#!/usr/bin/perl -I ./blib/arch -I ./blib/lib
+#!/usr/bin/perl
 #
 # OSC Ping Server
 #
