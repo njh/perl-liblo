@@ -20,6 +20,8 @@ sub new {
     # Was an lo_message passed to us?
     if( ref($_[0]) eq "lo_message") {
     	$self->{message} = shift;
+		# Don't free memory we didn't allocate
+		$self->{dontfree} = 1;
     } else {
     	$self->{message} = Net::LibLO::lo_message_new();
     }
@@ -141,7 +143,10 @@ sub DESTROY {
     my $self=shift;
     
     if (defined $self->{message}) {
-    	Net::LibLO::lo_message_free( $self->{message} );
+    	# Don't free memory we didn't allocate
+		unless ($self->{dontfree}) {
+	    	Net::LibLO::lo_message_free( $self->{message} );
+	    }
     	undef $self->{message};
     }
 }

@@ -28,6 +28,8 @@ sub new {
     	if (ref($_[0]) eq 'lo_address') {
   			my ($address) = @_;
 			$self->{address} = $address;
+			# Don't free memory we didn't allocate
+			$self->{dontfree} = 1;
 		} elsif ($_[0] =~ /^\d+$/) {
   			my ($port) = @_;
 			$self->{address} = Net::LibLO::lo_address_new( 'localhost', $port );
@@ -89,7 +91,10 @@ sub DESTROY {
     my $self=shift;
    
     if (defined $self->{address}) {
-    	Net::LibLO::lo_address_free( $self->{address} );
+    	# Don't free memory we didn't allocate
+		unless ($self->{dontfree}) {
+    		Net::LibLO::lo_address_free( $self->{address} );
+    	}
     	undef $self->{address};
     }
 }
