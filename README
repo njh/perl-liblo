@@ -2,9 +2,7 @@ liblo perl binding
 ==================
 
 Perl binding for the liblo library.
-
-Only Client support is currently implemented.
-See Net::LibLO::Client for details.
+LibLO library version 0.23 or higher is required.
 
 
 
@@ -22,6 +20,80 @@ INSTALLATION
 	
 		./Build install
 
+
+API Overview
+------------
+
+	Items marked * have not been implemented in this release.
+
+	Net::LibLO::Address
+		- new(url)
+		- new(host, port)
+		- get_hostname
+		- get_port
+		- get_url
+		- errno
+		- errstr
+		- DESTROY
+	
+	Net::LibLO::Message
+		- new
+		- new(typespec, args)
+		- add_int32
+		- add_float
+		- add_string
+		- add_double
+		- add_symbol
+		- add_char
+		- add_true
+		- add_false
+		- add_nil
+		- add_infinitum
+		- length
+		- pretty_print
+	*	- serialise
+		- get_source
+		- DESTROY
+		
+	Net::LibLO::Bundle
+		- new
+		- new(sec, frac)
+		- add_message(path, message)
+		- add_message(path, typespec, args )
+		- length 
+	*	- serialise
+		- DESTROY
+		
+	Net::LibLO( port_string )
+		- new
+		- new(port, protocol)
+		- send(dest, bundle)
+		- send(dest, path, message)
+		- send(dest, path, typespec, @params)
+	*	- send_timestamped( dest, timetag, path, message )
+	*	- send_timestamped( dest, timetag, path, typespec, @params )
+		- recv
+		- recv_noblock( timeout )
+		- add_method( path, typespec, handler, userdata )
+	*	- del_method( path, typespec )
+		- get_port
+		- get_url
+	*	- events_pending
+	*	- next_event_delay
+		- DESTROY
+	
+		
+	handler( serv, mesg, path, typespec, userdata, @params )
+		
+	
+
+KNOWN BUGS
+----------
+	
+	- Not all OSC types are supported
+	- You cannot remove methods
+	- Possible memory leaks when freeing Net::LibLO objects
+	
 
 AUTHOR
 ------
