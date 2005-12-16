@@ -257,6 +257,9 @@ going to be sent to is also required.
 
 Prints the message to STDOUT - probably most useful for debugging.
 
+=back
+
+
 =head1 AUTHOR
 
 Nicholas J. Humfrey, njh@aelius.com
