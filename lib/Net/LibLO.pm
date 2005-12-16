@@ -8,7 +8,6 @@ package Net::LibLO;
 #
 
 use XSLoader;
-use Data::Dumper;
 use Carp;
 
 use Net::LibLO::Address;
@@ -171,9 +170,71 @@ __END__
 
 Net::LibLO - Perl interface for liblo Lightweight OSC library
 
+=head1 SYNOPSIS
+
+  use Net::LibLO;
+
+  my $lo = new Net::LibLO( );
+  $lo->add_method( "/reply", 's', \&my_handler );
+  $lo->send( 'osc://localhost:5600/', '/foo/bar', 's', 'Hello World' );
+
 =head1 DESCRIPTION
 
-liblo-perl is a Perl Interface for the liblo Lightweight OSC library.
+Net::LibLO class is used to send and recieve OSC messages using LibLO
+(the Lightweight OSC library). The coding style is slightly different to 
+the C interface to LibLO, because it makes use of perl's Object Oriented 
+functionality. 
+
+
+=over 4
+
+=item B<new( [port], [protocol] )>
+
+Create a new LibLO object for sending a recieving messages.
+If the C<port> is missing, then a random port number is chosen.
+If the C<protocol> is missing, than UDP is used.
+
+=item B<send( dest, bundle )>
+
+Send a bundle to the sepecified destination.
+C<dest> can either be a Net::LibLO::Address object, a URL or a port.
+C<bundle> should be a Net::LibLO::Bundle object.
+
+=item B<send( dest, path, message )>
+
+Foo
+
+=item B<send( dest, path, typespec, @params )>
+
+Foo
+
+=item B<recv()>
+
+Foo
+
+=item B<recv_noblock( [timeout] )>
+
+Foo
+
+=item B<add_method( path, typespec, handler, userdata )>
+
+Foo
+
+=item B<get_port()>
+
+Foo
+
+=item B<get_url()>
+
+Foo
+
+=item B<my_handler( serv, mesg, path, typespec, userdata, @params )>
+
+Foo
+
+
+=back
+
 
 
 =head1 SEE ALSO

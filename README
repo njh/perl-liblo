@@ -65,15 +65,14 @@ API Overview
 		- DESTROY
 		
 	Net::LibLO( port_string )
-		- new
-		- new(port, protocol)
+		- new([port], [protocol])
 		- send(dest, bundle)
 		- send(dest, path, message)
 		- send(dest, path, typespec, @params)
 	*	- send_timestamped( dest, timetag, path, message )
 	*	- send_timestamped( dest, timetag, path, typespec, @params )
 		- recv
-		- recv_noblock( timeout )
+		- recv_noblock( [timeout] )
 		- add_method( path, typespec, handler, userdata )
 	*	- del_method( path, typespec )
 		- get_port
@@ -84,8 +83,7 @@ API Overview
 	
 		
 	handler( serv, mesg, path, typespec, userdata, @params )
-		
-	
+
 
 KNOWN BUGS
 ----------
