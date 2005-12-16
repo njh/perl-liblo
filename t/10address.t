@@ -4,7 +4,7 @@ use Test;
 
 
 # use a BEGIN block so we print our plan before Net::LibLO::Address is loaded
-BEGIN { plan tests => 11 }
+BEGIN { plan tests => 10 }
 
 # load Net::LibLO::Address
 use Net::LibLO::Address;
@@ -34,9 +34,6 @@ ok( $addr );
 # Check for error number
 # (there shouldn't have been one)
 ok($addr->errno(), 0);
-
-# Check for error string
-ok($addr->errstr(), "Unknown error: 0");
 
 # Check get_hostname
 ok($addr->get_hostname(), 'example.net');
