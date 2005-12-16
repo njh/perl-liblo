@@ -197,41 +197,85 @@ If the C<protocol> is missing, than UDP is used.
 =item B<send( dest, bundle )>
 
 Send a bundle to the sepecified destination.
+
 C<dest> can either be a Net::LibLO::Address object, a URL or a port.
+
 C<bundle> should be a Net::LibLO::Bundle object.
 
 =item B<send( dest, path, message )>
 
-Foo
+Send a message to the sepecified destination.
 
-=item B<send( dest, path, typespec, @params )>
+C<dest> can either be a Net::LibLO::Address object, a URL or a port.
 
-Foo
+C<message> should be a Net::LibLO::Message object.
+
+=item B<send( dest, path, typespec, params... )>
+
+Construct and send a message to the sepecified destination.
+
+C<dest> can either be a Net::LibLO::Address object, a URL or a port.
+
+C<path> is the path to send the message to.
+
+C<typespec> and C<params> are passed through to create the new message.
 
 =item B<recv()>
 
-Foo
+Block and wait to receive a single message. Returns the length of the 
+message in bytes  or number less than 1 on failure. Length of message 
+is returned, whether the message has been handled by a method or not.
 
 =item B<recv_noblock( [timeout] )>
 
-Foo
+Look for an OSC message waiting to be received.
+Waits for C<timeout> milliseconds for a message and then returns the 
+length of the message, or 0 if there was no message.
+Use a value of 0 to return immediatly.
 
 =item B<add_method( path, typespec, handler, userdata )>
 
-Foo
+Add an OSC method to the specifed server.
 
-=item B<get_port()>
+C<path> is the OSC path to register the method to.
+If C<undef> is passed the method will match all paths.
 
-Foo
+C<typespec> is OSC typespec that the method accepts. Incoming messages with
+similar typespecs (e.g. ones with numerical types in the same position) will
+be coerced to the typespec given here.
 
-=item B<get_url()>
+C<handler> is a reference to the method handler callback subroutine that will 
+be called if a matching message is received. 
 
-Foo
+C<user_data> is a value that will be passed to the callback subroutine,
+when its invoked matching from this method.
 
 =item B<my_handler( serv, mesg, path, typespec, userdata, @params )>
 
-Foo
+This is order of parameters that will be passed to your method handler
+subroutines. 
 
+C<serv> is the Net::LibLO object that the method is registered with.
+
+C<mesg> is a Net::LibLO::Message object for the incoming message.
+
+C<path> is the path the incoming message was sent to.
+
+C<typespec> If you specided types in your method creation call then this
+will match those and the incoming types will have been coerced to match,
+otherwise it will be the types of the arguments of the incoming message.
+
+C<userdata> This contains the userdata value passed in the call to C<add_method> 
+
+C<params> is an array of values associated with the message
+
+=item B<get_port()>
+
+Returns the port the socket is bound to.
+
+=item B<get_url()>
+
+Returns the full URL for talking to this server.
 
 =back
 
