@@ -12,7 +12,7 @@ my $lo = new Net::LibLO( 4542 );
 
 
 # Add method
-$lo->add_method( '/ping', '', \&pinghandler , 69);
+$lo->add_method( '/ping', '', \&pinghandler , 'userdata');
 
 # Wait for pings
 while(1) {
