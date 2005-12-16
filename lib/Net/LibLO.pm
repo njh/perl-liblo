@@ -130,14 +130,14 @@ sub add_method {
 	return $result;
 }
 
-sub del_method {
-    my $self=shift;
-    my ($path, $typespec) = @_;
-
-	#my $result = Net::LibLO::lo_server_del_method( $self->{server}, $path, $typespec );
-
-	# XXX: Remove from array too
-}
+#sub del_method {
+#    my $self=shift;
+#    my ($path, $typespec) = @_;
+#
+#	my $result = Net::LibLO::lo_server_del_method( $self->{server}, $path, $typespec );
+#
+#	# XXX: Remove from array too
+#}
 
 sub _method_dispatcher {
 	my ($ref, $mesg, $path, $typespec, @params) = @_;
@@ -169,37 +169,20 @@ __END__
 
 =head1 NAME
 
-LibLO - Perl interface for liblo Lightweight OSC library
+Net::LibLO - Perl interface for liblo Lightweight OSC library
 
 =head1 DESCRIPTION
 
 liblo-perl is a Perl Interface for the liblo Lightweight OSC library.
 
-See L<LibLO::Client> for details of how to use this module in a client.
-
-=head1 TODO
-
-=over
-
-=item Create LibLO::Server class
-
-=item Create LibLO::Blob class
-
-=item Create LibLO::Bundle class
-
-=item Add support for int64
-
-=item Add support for midi
-
-=item Add support for timetags
-
-=back
 
 =head1 SEE ALSO
 
-L<LibLO::Client>
+L<Net::LibLO::Address>
 
-L<LibLO::Message>
+L<Net::LibLO::Bundle>
+
+L<Net::LibLO::Message>
 
 L<http://plugin.org.uk/liblo/>
 
