@@ -125,9 +125,13 @@ Net::LibLO::Address is a perl class which represents an address to send messages
 
 =over 4
 
-=item B<new( port, hostname )>
+=item B<new( hostname, port )>
 
 Create a new OSC address, from a hostname and port
+
+=item B<new( port )>
+
+Create a new OSC address, from port. Localhost is assumed.
 
 =item B<new( url )>
 
