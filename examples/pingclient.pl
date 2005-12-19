@@ -32,7 +32,7 @@ if (!$reply) {
 
 
 sub ponghandler {
-	my ($serv, $mesg, $path, $typespec, @params) = @_;
+	my ($serv, $mesg, $path, $typespec, $userdata, @params) = @_;
 	my $from = $mesg->get_source();
 	print "Got pong from '".$from->get_url()."'.\n";
 }
