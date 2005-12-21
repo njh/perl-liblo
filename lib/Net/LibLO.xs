@@ -49,7 +49,7 @@ int xs_liblo_handler(const char *path, const char *types,
 			case 'N': XPUSHs(sv_2mortal(newSVpv("0Nil0",5))); break;
 			case 'I': XPUSHs(sv_2mortal(newSVpv("Infinitum",9))); break;
 			default:
-				carp( "xs_liblo_handler: Unsupported OSC type '%c'.", types[i] );
+				fprintf(stderr, "xs_liblo_handler: Unsupported OSC type '%c'.", types[i] );
 			break;
 		}
 	}
