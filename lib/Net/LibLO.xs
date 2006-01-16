@@ -85,11 +85,6 @@ lo_address
 lo_address_new( host, port )
 	const char *host
 	const char *port
-  CODE:
-	RETVAL = lo_address_new( host, port );
-  OUTPUT:
-	RETVAL
-
 
 ##
 ## New address from URL
@@ -97,11 +92,6 @@ lo_address_new( host, port )
 lo_address
 lo_address_new_from_url ( url )
 	const char *url
-  CODE:
-	RETVAL = lo_address_new_from_url( url );
-  OUTPUT:
-	RETVAL
-
 
 ##
 ## Return the error code for the last error
@@ -110,11 +100,6 @@ lo_address_new_from_url ( url )
 int
 lo_address_errno( address )
 	lo_address	address
-  CODE:
-	RETVAL = lo_address_errno( address );
-  OUTPUT:
-	RETVAL
-
 
 ##
 ## Return the error string from the last error
@@ -123,33 +108,21 @@ lo_address_errno( address )
 const char*
 lo_address_errstr( address )
 	lo_address address
-  CODE:
-	RETVAL = lo_address_errstr( address );
-  OUTPUT:
-	RETVAL
-	
+
 ##
 ## Return the hostname part of lo_address
 ##
 const char*
 lo_address_get_hostname( address )
 	lo_address address
-  CODE:
-	RETVAL = lo_address_get_hostname( address );
-  OUTPUT:
-	RETVAL
-	
+
 ##
 ## Return the port part of lo_address
 ##
 const char*
 lo_address_get_port( address )
 	lo_address address
-  CODE:
-	RETVAL = lo_address_get_port( address );
-  OUTPUT:
-	RETVAL
-	
+
 ##
 ## Return the URL of a lo_address
 ##
@@ -171,9 +144,6 @@ lo_address_get_url( address )
 void
 lo_address_free ( address )
 	lo_address	address
-  CODE:
-	lo_address_free( address );
-
 
 ##
 ## New blob from Perl Scalar
@@ -197,11 +167,6 @@ lo_blob_new( sv )
 int
 lo_blob_datasize ( blob )
 	lo_blob	blob
-  CODE:
-	RETVAL = lo_blob_datasize( blob );
-  OUTPUT:
-	RETVAL
-
 
 ##
 ## Free up memory used by a blob
@@ -209,116 +174,75 @@ lo_blob_datasize ( blob )
 void
 lo_blob_free ( blob )
 	lo_blob	blob
-  CODE:
-	lo_blob_free( blob );
-
 
 ##
 ## Message related XSUBs
 ##
 lo_message
 lo_message_new()
-  CODE:
-	RETVAL = lo_message_new();
-  OUTPUT:
-	RETVAL
 
 void
 lo_message_free( msg )
 	lo_message msg
-  CODE:
-	lo_message_free(msg);
 
 void
 lo_message_pp(msg)
 	lo_message   msg
-  CODE:
-	lo_message_pp( msg );
-	
+
 size_t
 lo_message_length(msg,path)
 	lo_message msg
 	const char *path
-  CODE:
-	RETVAL = lo_message_length(msg,path);
-	
-  OUTPUT:
-	RETVAL
 
 void
 lo_message_add_char(msg, ch)
 	lo_message   msg
 	char		 ch
-  CODE:
-  	lo_message_add_char( msg, ch );
-  	
+
 void
 lo_message_add_double(msg, d)
 	lo_message   msg
 	double		 d
-  CODE:
-  	lo_message_add_double( msg, d );
-  	
+
 void
 lo_message_add_false(msg)
 	lo_message   msg
-  CODE:
-  	lo_message_add_false( msg );
 
 void
 lo_message_add_float(msg, f)
 	lo_message   msg
 	float		 f
-  CODE:
-  	lo_message_add_float( msg, f );
 
 void
 lo_message_add_infinitum(msg)
 	lo_message   msg
-  CODE:
-  	lo_message_add_infinitum( msg );
 
 void
 lo_message_add_int32(msg, i)
 	lo_message   msg
 	I32			 i
-  CODE:
-  	lo_message_add_int32( msg, i );
 
 void
 lo_message_add_nil(msg)
 	lo_message   msg
-  CODE:
-  	lo_message_add_nil( msg );
 
 void
 lo_message_add_string(msg, str)
 	lo_message   msg
 	const char*  str
-  CODE:
-  	lo_message_add_string( msg, str );
 
 void
 lo_message_add_symbol(msg, sym)
 	lo_message   msg
 	const char*  sym
-  CODE:
-  	lo_message_add_symbol( msg, sym );
 
 void
 lo_message_add_true(msg)
 	lo_message   msg
-  CODE:
-  	lo_message_add_true( msg );
 
 lo_address
 lo_message_get_source(msg)
 	lo_message   msg
-  CODE:
-  	RETVAL = lo_message_get_source( msg );
-  OUTPUT:
-	RETVAL
-
 
 ##
 ## New Bundle
@@ -345,9 +269,6 @@ lo_bundle_add_message(b, path, m)
 	lo_bundle b
 	const char *path
 	lo_message m
-  CODE:
-  	lo_bundle_add_message( b, path, m );
-
 
 ##
 ## Get length of a Bundle
@@ -355,11 +276,6 @@ lo_bundle_add_message(b, path, m)
 int
 lo_bundle_length(b)
 	lo_bundle b
-  CODE:
-	RETVAL = lo_bundle_length( b );
-  OUTPUT:
-	RETVAL
-
 
 ##
 ## Pretty Print Bundle
@@ -367,8 +283,6 @@ lo_bundle_length(b)
 void
 lo_bundle_pp ( b )
 	lo_bundle b
-  CODE:
-	lo_bundle_pp( b );
 
 ##
 ## Free Bundle
@@ -376,9 +290,6 @@ lo_bundle_pp ( b )
 void
 lo_bundle_free ( b )
 	lo_bundle b
-  CODE:
-	lo_bundle_free( b );
-
 
 ##
 ## Create a new server
@@ -406,6 +317,13 @@ lo_server_new_with_proto( port, protostr )
   OUTPUT:
 	RETVAL
 
+
+##
+## Free up server
+##
+void
+lo_server_free( s )
+	lo_server s
 	
 ##
 ## Get port of server
@@ -413,10 +331,6 @@ lo_server_new_with_proto( port, protostr )
 int
 lo_server_get_port(s)
 	lo_server s
-  CODE:
-	RETVAL = lo_server_get_port( s );
-  OUTPUT:
-	RETVAL
 
 ##
 ## Get URL of server
@@ -453,10 +367,6 @@ lo_server_add_method( server, path, typespec, userdata )
 int
 lo_server_recv( server )
 	lo_server	 server
-  CODE:
-	RETVAL = lo_server_recv( server );
-  OUTPUT:
-	RETVAL
 
 ##
 ## Wait for an OSC packet to arrive
@@ -465,11 +375,6 @@ int
 lo_server_recv_noblock( server, timeout )
 	lo_server	 server
 	int			 timeout
-  CODE:
-	RETVAL = lo_server_recv_noblock( server, timeout );
-  OUTPUT:
-	RETVAL
-
 
 ##
 ## Send an OSC message
@@ -480,11 +385,6 @@ lo_send_message_from( address, from, path, message )
 	lo_server	 from
 	const char*  path
 	lo_message   message
-  CODE:
-	RETVAL = lo_send_message_from( address, from, path, message );
-  OUTPUT:
-	RETVAL
-
 
 ##
 ## Send an OSC bundle
@@ -494,18 +394,3 @@ lo_send_bundle_from( address, from, bundle )
 	lo_address	 address
 	lo_server	 from
 	lo_bundle    bundle
-  CODE:
-	RETVAL = lo_send_bundle_from( address, from, bundle );
-  OUTPUT:
-	RETVAL
-
-
-##
-## Free up server
-##
-void
-lo_server_free( s )
-	lo_server s
-  CODE:
-	lo_server_free( s );
-
