@@ -289,7 +289,7 @@ L<Net::LibLO::Bundle>
 
 L<Net::LibLO::Message>
 
-L<http://plugin.org.uk/liblo/>
+L<http://liblo.sourceforge.net/>
 
 =head1 AUTHOR
 
