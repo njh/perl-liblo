@@ -1,5 +1,8 @@
 Revision history for liblo perl bindings
 
+0.04  Fri Apr 21 22:54:49 BST 2006
+	Added Makefile.PL
+
 0.03  Fri Dec 16 00:36:41 GMT 2005
 	Changed namespace to Net::LibLO
 	Merged client and server into single parent object.
