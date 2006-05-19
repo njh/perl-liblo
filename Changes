@@ -1,5 +1,8 @@
 Revision history for liblo perl bindings
 
+0.05  Fri May 19 16:56:01 BST 2006
+	Better checking for pkg-config / LibLO
+
 0.04  Fri Apr 21 22:54:49 BST 2006
 	Added Makefile.PL
 

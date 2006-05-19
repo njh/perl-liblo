@@ -8,8 +8,15 @@ use strict;
 # Check for pkg-config
 my $pkgconfig = `which pkg-config`;
 chomp($pkgconfig);
-if ($pkgconfig =~ /not found/) {
-	die "Error: pkgconfig is not available on your system";
+if ($pkgconfig !~ /pkg-config/ or 
+    $pkgconfig =~ /not found/i)
+{
+	die "Error: pkgconfig is not available on your system\n".
+	    "It is available from http://pkgconfig.freedesktop.org/\n";
+} else {
+	my $pkgconfig_version = `$pkgconfig --version`;
+	chomp( $pkgconfig_version );
+	print "Found pkg-config version $pkgconfig_version.\n";
 }
 
 # Check for liblo
@@ -24,13 +31,20 @@ if ($liblo_version !~ /^\d+\.\d+$/) {
 
 # Is it new enough ?
 if ($liblo_version < 0.23) {
-	die "LibLO Version 0.23 or higher is required.\n";
+	die "Error: LibLO Version 0.23 or higher is required.\n";
 }
 
-# Get CFLAGS and LDFLAGS
-my $CFLAGS = `$pkgconfig --cflags liblo`;
-my $LDFLAGS = `$pkgconfig --libs liblo`;
-chomp( $CFLAGS, $LDFLAGS );
+# Get LibLO CFLAGS
+my $LIBLO_CFLAGS = `$pkgconfig --cflags liblo`;
+chomp( $LIBLO_CFLAGS );
+print " LIBLO_CFLAGS = $LIBLO_CFLAGS\n";
+
+# Get LibLO LIBS
+my $LIBLO_LIBS = `$pkgconfig --libs liblo`;
+chomp( $LIBLO_LIBS );
+print " LIBLO_LIBS = $LIBLO_LIBS\n";
+
+
 
 
 
@@ -49,8 +63,10 @@ my $build = Module::Build->new
 		'Test' => '1.00',
 	},
 	
-	extra_compiler_flags => $CFLAGS,
-	extra_linker_flags => $LDFLAGS,
+	extra_compiler_flags => $LIBLO_CFLAGS,
+	extra_linker_flags => $LIBLO_LIBS,
 );
 
 $build->create_build_script;
+
+

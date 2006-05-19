@@ -2,8 +2,12 @@ liblo perl binding
 ==================
 
 Perl binding for the liblo library.
-LibLO library version 0.23 or higher is required.
 
+LibLO library version 0.23 or higher is required.
+http://liblo.sourceforge.net/
+
+Pkg-config version 0.11 or higher is required:
+http://pkgconfig.freedesktop.org/
 
 
 INSTALLATION
