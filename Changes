@@ -1,5 +1,8 @@
 Revision history for liblo perl bindings
 
+0.06  Fri Mar  9 20:57:01 GMT 2007
+	Added POD documentation test
+
 0.05  Fri May 19 16:56:01 BST 2006
 	Better checking for pkg-config / LibLO
 

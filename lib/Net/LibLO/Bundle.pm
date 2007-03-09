@@ -134,6 +134,8 @@ Returns the length of the message (in bytes).
 
 Display the contents of the bundle to STDOUT.
 
+=back
+
 =head1 AUTHOR
 
 Nicholas J. Humfrey, njh@aelius.com

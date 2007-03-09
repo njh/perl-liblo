@@ -22,7 +22,7 @@ if ($pkgconfig !~ /pkg-config/ or
 # Check for liblo
 my $liblo_version = `$pkgconfig --modversion liblo`;
 chomp($liblo_version);
-if ($liblo_version !~ /^\d+\.\d+$/) {
+if ($liblo_version !~ /^\d+\.\d+/) {
 	print STDERR $liblo_version;
 	exit -1;
 } else {
@@ -61,6 +61,12 @@ my $build = Module::Build->new
 	
 	requires => {
 		'Test' => '1.00',
+		'Test::More' => 0,
+	},
+
+        # Optional modules
+	recommends => {
+		'Test::Pod' => '1.00',
 	},
 	
 	extra_compiler_flags => $LIBLO_CFLAGS,

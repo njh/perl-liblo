@@ -157,6 +157,8 @@ Return the error number from the last failure.
 
 Return the error string from the last failure.
 
+=back
+
 =head1 AUTHOR
 
 Nicholas J. Humfrey, njh@aelius.com
