@@ -176,7 +176,7 @@ Net::LibLO - Perl interface for liblo Lightweight OSC library
 
   my $lo = new Net::LibLO( );
   $lo->add_method( "/reply", 's', \&my_handler );
-  $lo->send( 'osc://localhost:5600/', '/foo/bar', 's', 'Hello World' );
+  $lo->send( 'osc.udp://localhost:5600/', '/foo/bar', 's', 'Hello World' );
 
 =head1 DESCRIPTION
 
